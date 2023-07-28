@@ -1,11 +1,11 @@
 <?php
 
 # Nom du serveur
-$sName = "localhost";
+$sName = "109.234.165.176";
 # Nom d'utilisateur
-$uName = "root";
+$uName = "krpi8598_admin";
 # Mot de passe
-$pass = "root";
+$pass = "Afrique2015!";
 # Nom de la base de données
 $db_name = "krpi8598_diarabattle";
 
