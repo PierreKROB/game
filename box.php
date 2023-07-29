@@ -38,7 +38,7 @@ if (isset($_SESSION['username'])) {
                     <?php echo htmlspecialchars($row['nom']); ?><br>
                     Puissance: <?php echo $puissance_affiche; ?><br>
                     Défense: <?php echo $def_affiche; ?><br>
-                    HP: <?php echo $hp_affiche; ?>
+                    HP: <?php echo $hp_affiche; ?><br>
                     Niveau: <?php echo $row['lvl']; ?><br> <!-- Affichage des HP calculés -->
                 </li>
             <?php
