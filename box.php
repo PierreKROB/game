@@ -11,7 +11,7 @@
 
     <div>
         <h1>Liste des personnages</h1>
-
+        <?php var_dump($_SESSION) ?>
         <ul>
             <?php
             # Fichier de connexion à la base de données
