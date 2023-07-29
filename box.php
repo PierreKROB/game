@@ -30,9 +30,9 @@ if (isset($_SESSION['username'])) {
 
             # Boucle pour afficher les informations de chaque personnage
             while ($row = $stmt->fetch()) {
-                $hp_affiche = $row['HP']* (1+($row['lvl']-1)/100)**2;
-                $puissance_affiche = $row['puissance']* (1+($row['lvl']-1)/100)**2;
-                $def_affiche = $row['def']* (1+($row['lvl']-1)/100)**2;
+                $hp_affiche = $row['HP']* (1+($row['lvl'])/100)**2;
+                $puissance_affiche = $row['puissance']* (1+($row['lvl'])/100)**2;
+                $def_affiche = $row['defense']* (1+($row['lvl'])/100)**2;
             ?>
                 <li>
                     <?php echo htmlspecialchars($row['nom']); ?><br>
