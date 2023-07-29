@@ -17,6 +17,9 @@ if (isset($_GET['ids'])) {
     // Préparer la requête SQL pour récupérer les détails des personnages sélectionnés
     // Utilisez une requête préparée pour éviter les injections SQL
     $sql = "SELECT * FROM personnages WHERE id IN (" . implode(',', $ids) . ")";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
     $result = mysqli_query($conn, $sql);
 
     if ($result) {
