@@ -1,7 +1,7 @@
 <?php
 
 # Nom du serveur
-$sName = "109.234.165.176";
+$sName = "localhost";
 # Nom d'utilisateur
 $uName = "krpi8598_admin";
 # Mot de passe
