@@ -18,7 +18,7 @@
             include 'app/db.conn.php';
 
             # Requête pour récupérer tous les personnages
-            $sql = "SELECT id, nom, puissance, niveau, experience, defense FROM personnages";
+            $sql = "SELECT nom, puissance, niveau, experience, defense FROM personnages";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
 
