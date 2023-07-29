@@ -25,7 +25,7 @@ if (isset($_SESSION['username'])) {
             <button id="summon-button" class="button">Faire une invocation</button>
             <button id="battle-button" class="button">Combattre</button>
             <button id="box-button" class="button"><a href="box.php">Ma box</a></button>
-            <button id="logout" class="button"><a href="logout.php">Déconnexion</a></button>
+            <button id="logout" href="logout.php" class="button">Déconnexion</button>
             <div id="battle-log"></div>
         </div>
 

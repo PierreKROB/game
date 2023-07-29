@@ -13,16 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </div>';
     } elseif ($newPassword !== $confirmPassword) {
         $error = "Les nouveaux mots de passe ne correspondent pas.";
-    } else {
-        // Le mot de passe est valide, procéder au traitement
-
-        // Traitement du formulaire de changement de mot de passe
-        // Assurez-vous de valider et de sécuriser les données soumises
-
-        // Remplacer les informations de connexion par celles de la base de données "joueurs"
+    } else {    
         include 'app/db.conn.php';
-
-        // Création de la connexion à la base de données "joueurs"
         try {
             $conn = new PDO("mysql:host=$sName;dbname=$db_name;charset=utf8", $uName, $pass);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
