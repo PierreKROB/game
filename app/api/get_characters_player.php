@@ -1,7 +1,7 @@
 <?php
 # Inclure le fichier de connexion à la base de données
 include '../db.conn.php';
-
+session_start();
 # Requête pour récupérer tous les personnages de la table "personnages"
 $user_id = $_SESSION['user_id'];
 # Requête pour récupérer tous les personnages
