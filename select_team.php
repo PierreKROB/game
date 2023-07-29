@@ -13,7 +13,7 @@
         <h1>Sélectionnez votre équipe</h1>
         <p>Choisissez les personnages que vous souhaitez inclure dans votre équipe pour affronter le niveau.</p>
 
-        <form method="post" action="app/api/start_level.php">
+        <form method="post" action="battle.php">
 
             <!-- Récupérer le niveau sélectionné depuis l'URL -->
             <?php

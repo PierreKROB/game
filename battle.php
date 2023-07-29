@@ -1,22 +1,53 @@
-<?php
-session_start();
+<!DOCTYPE html>
+<html lang="fr">
 
-# Vérifier si des personnages ont été sélectionnés pour l'équipe
-if (isset($_POST['personnages']) && is_array($_POST['personnages']) && !empty($_POST['personnages'])) {
-    # Récupérer les identifiants des personnages sélectionnés
-    $personnages_ids = $_POST['personnages'];
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bataille</title>
+</head>
 
-    # Vous pouvez maintenant utiliser $personnages_ids pour obtenir les détails des personnages depuis la base de données
-    # Par exemple, vous pouvez effectuer une requête SQL pour récupérer les détails des personnages sélectionnés
+<body class="body">
 
-    # Pour cet exemple, nous allons simplement afficher les identifiants des personnages sélectionnés
-    echo "<h1>Équipe sélectionnée :</h1>";
-    echo "<ul>";
-    foreach ($personnages_ids as $personnage_id) {
-        echo "<li>Personnage ID : $personnage_id</li>";
-    }
-    echo "</ul>";
-} else {
-    echo "<h1>Aucun personnage sélectionné pour l'équipe</h1>";
-}
-?>
+    <div>
+        <h1>Votre équipe pour la bataille</h1>
+        <p>Voici les personnages que vous avez sélectionnés pour affronter le niveau :</p>
+
+        <?php
+        // Vérifier si des personnages ont été sélectionnés
+        if (isset($_POST['personnages'])) {
+            $personnages_ids = $_POST['personnages'];
+
+            // Faire une requête à l'API pour obtenir les détails des personnages sélectionnés
+            // Assurez-vous de remplacer "app/api/get_character_details.php" par l'URL réelle de votre API
+            $url = "app/api/get_character_details.php?ids=" . implode(',', $personnages_ids);
+            $response = file_get_contents($url);
+
+            if ($response !== false) {
+                $characters = json_decode($response, true);
+
+                // Afficher les informations des personnages sélectionnés
+                echo "<ul>";
+                foreach ($characters as $character) {
+                    echo "<li>";
+                    echo "Nom : " . $character['nom'] . "<br>";
+                    echo "Niveau : " . $character['niveau'] . "<br>";
+                    echo "Puissance : " . $character['puissance'] . "<br>";
+                    // Affichez d'autres informations que vous avez dans la réponse JSON
+                    echo "</li>";
+                }
+                echo "</ul>";
+            } else {
+                echo "Erreur lors de la récupération des détails des personnages depuis l'API.";
+            }
+        } else {
+            echo "<p>Aucun personnage n'a été sélectionné pour la bataille.</p>";
+        }
+        ?>
+
+        <a href="page_precedente.php">Revenir à la sélection d'équipe</a>
+    </div>
+
+</body>
+
+</html>
