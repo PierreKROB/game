@@ -19,9 +19,18 @@
             $personnages_ids = $_POST['personnages'];
 
             // Faire une requête à l'API pour obtenir les détails des personnages sélectionnés
-            // Assurez-vous de remplacer "app/api/get_character_details.php" par l'URL réelle de votre API
-            $url = "app/api/get_characters_details.php?ids=" . implode(',', $personnages_ids);
-            $response = file_get_contents($url);
+            // Assurez-vous de remplacer "app/api/get_characters_details.php" par l'URL réelle de votre API
+            $url = "app/api/get_characters_details.php";
+            $data = array('ids' => implode(',', $personnages_ids));
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+            $response = curl_exec($ch);
+            curl_close($ch);
 
             if ($response !== false) {
                 $characters = json_decode($response, true);
