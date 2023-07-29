@@ -1,4 +1,9 @@
-<?php var_dump($_SESSION) ?>
+<?php 
+session_start();
+if (!isset($_SESSION['username'])){
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -59,3 +64,10 @@
 </body>
 
 </html>
+<?php 
+}
+else{
+    header("Location: home.php");
+    exit;
+}
+?>
