@@ -24,12 +24,12 @@
 
             # Boucle pour afficher les informations de chaque personnage
             while ($row = $stmt->fetch()) {
-                $hp_affiche = ($row['lvl'] * 0.03) * $row['HP']; // Calcul des HP affichés
+                $hp_affiche = ($row['lvl'] * 1.03) * $row['HP']; // Calcul des HP affichés
             ?>
                 <li>
                     <?php echo htmlspecialchars($row['nom']); ?><br>
                     Puissance: <?php echo $row['puissance']; ?><br>
-                    Niveau: <?php echo $row['niveau']; ?><br>
+                    Niveau: <?php echo $row['lvl']; ?><br>
                     Défense: <?php echo $row['defense']; ?><br>
                     HP: <?php echo $hp_affiche; ?> <!-- Affichage des HP calculés -->
                 </li>
