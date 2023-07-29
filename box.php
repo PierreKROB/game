@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (isset($_SESSION['username'])) {
+    
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -11,16 +18,15 @@
 
     <div>
         <h1>Liste des personnages</h1>
-        <?php var_dump($_SESSION) ?>
         <ul>
             <?php
             # Fichier de connexion à la base de données
             include 'app/db.conn.php';
-
+            $user_id = $_SESSION['user_id'];
             # Requête pour récupérer tous les personnages
-            $sql = "SELECT nom, puissance, defense, HP, box.niveau_actuel AS lvl FROM personnages Join box on personnages.id = box.personnage_id WHERE box.joueur_id = 5";
+            $sql = "SELECT nom, puissance, defense, HP, box.niveau_actuel AS lvl FROM personnages Join box on personnages.id = box.personnage_id WHERE box.joueur_id = ?";
             $stmt = $conn->prepare($sql);
-            $stmt->execute();
+            $stmt->execute([$user_id]);
 
             # Boucle pour afficher les informations de chaque personnage
             while ($row = $stmt->fetch()) {
@@ -42,3 +48,10 @@
 </body>
 
 </html>
+
+<?php
+} else {
+    header("Location: index.php");
+    exit;
+}
+?>
