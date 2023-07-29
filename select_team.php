@@ -40,7 +40,7 @@ session_start()
 
     <script>
         // Requête Fetch pour récupérer tous les personnages depuis l'API
-        fetch("app/api/get_personnages.php")
+        fetch("app/api/get_personnages_player.php")
             .then(response => response.json())
             .then(data => {
                 const charactersList = document.getElementById("characters-list");
