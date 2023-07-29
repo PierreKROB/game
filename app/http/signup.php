@@ -32,22 +32,22 @@ if (isset($_POST['firstname']) && isset($_POST['lastname'])) {
          $password = randomMDP();
 
          $contenuFichier = "Utilisateur: $username   Mot de passe temporaire: $password\n";
-         $cheminFichier = "compte.txt";
-         file_put_contents($cheminFichier, $contenuFichier);
+         $cheminFichier = "compt.txt";
+         file_put_contents($cheminFichier, $contenuFichier, FILE_APPEND);
 
          $password = password_hash($password, PASSWORD_DEFAULT);
 
-         $sql_insert_joueur = "INSERT INTO joueurs (nom, mot_de_passe) VALUES (?, ?)";
-         $stmt_insert_joueur = $conn->prepare($sql_insert_joueur);
-         $stmt_insert_joueur->execute([$name, $password]);
+         $sql = "INSERT INTO joueurs (nom, mot_de_passe) VALUES (?, ?)";
+         $stmt = $conn->prepare($sql);
+         $stmt->execute([$name, $password]);
 
-         $sm = "Compte créé avec succès";
+         $sm = "Compte créé avec succès et feur";
          header("Location: ../../index.php?success=$sm");
          exit;
       }
    }
 } else {
-	$em = "il faut remplir les champs";
+	$em = "Il faut remplir les champs";
    header("Location: ../../signup.php?error=$em");
    exit;
 }
