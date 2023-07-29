@@ -6,6 +6,7 @@ $sName = "localhost";
 $uName = "krpi8598_admin";
 # Mot de passe
 $pass = "Afrique2015!";
+
 # Nom de la base de données
 $db_name = "krpi8598_diarabattle";
 
