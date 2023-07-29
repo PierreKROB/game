@@ -5,7 +5,7 @@ session_start();
 # Requête pour récupérer tous les personnages de la table "personnages"
 $user_id = $_SESSION['user_id'];
 # Requête pour récupérer tous les personnages
-$sql = "SELECT id_perso, nom, puissance, defense, HP, box.niveau_actuel AS lvl FROM personnages Join box on personnages.id = box.personnage_id WHERE box.joueur_id = ?";
+$sql = "SELECT id_perso, nom, puissance, defense, HP, box.niveau_actuel AS lvl FROM personnages Join box on personnages.id_perso = box.personnage_id WHERE box.joueur_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->execute([$user_id]);
 
