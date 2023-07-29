@@ -36,13 +36,18 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
       # vérification du mot de passe crypté
       if (password_verify($password, $user['mot_de_passe'])) {
+        if ($user['new'] == 1) {
+          // L'utilisateur est à sa première connexion, rediriger vers une page de réinitialisation du mot de passe
+          $_SESSION['rotabois'] = $user['id'];
+          header("Location: ../../changepassword.php");
+        }else
         # authentification réussie
         # création de la SESSION
-        $_SESSION['username'] = $user['nom'];
-        $_SESSION['user_id'] = $user['id'];
+          $_SESSION['username'] = $user['nom'];
+          $_SESSION['user_id'] = $user['id'];
 
-        # redirection vers 'home.php'
-        header("Location: ../../home.php");
+          # redirection vers 'home.php'
+          header("Location: ../../home.php");
       } else {
         # message d'erreur
         $em = "Nom d'utilisateur ou mot de passe incorrect";
