@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Assurez-vous de valider et de sécuriser les données soumises
 
         // Remplacer les informations de connexion par celles de la base de données "joueurs"
-        include 'app/db.conn.php' ;
+        include 'app/db.conn.php';
 
         // Création de la connexion à la base de données "joueurs"
         try {
@@ -38,6 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "UPDATE joueurs SET mot_de_passe=? WHERE id=?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$hashedPassword, $userId]);
+
+
+        $sqlReset = "UPDATE joueurs SET new=0 WHERE id=?";
+        $stmtReset = $conn->prepare($sqlReset);
+        $stmtReset->execute([$userId]);
 
         // Redirection vers la page de connexion avec un message de succès
         header("Location: index.php?success=Votre mot de passe a été modifié avec succès.");

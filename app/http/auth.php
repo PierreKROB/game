@@ -40,7 +40,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
           // L'utilisateur est à sa première connexion, rediriger vers une page de réinitialisation du mot de passe
           $_SESSION['rotabois'] = $user['id'];
           header("Location: ../../changepassword.php");
-        }else
+        }else{
         # authentification réussie
         # création de la SESSION
           $_SESSION['username'] = $user['nom'];
@@ -48,6 +48,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
           # redirection vers 'home.php'
           header("Location: ../../home.php");
+        }
       } else {
         # message d'erreur
         $em = "Nom d'utilisateur ou mot de passe incorrect";
