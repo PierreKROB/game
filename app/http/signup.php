@@ -39,7 +39,7 @@ if (isset($_POST['firstname']) && isset($_POST['lastname'])) {
 
          $sql = "INSERT INTO joueurs (nom, mot_de_passe) VALUES (?, ?)";
          $stmt = $conn->prepare($sql);
-         $stmt->execute([$name, $password]);
+         $stmt->execute([$username, $password]);
 
          $sm = "Compte créé avec succès et feur";
          header("Location: ../../index.php?success=$sm");
