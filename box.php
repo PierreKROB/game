@@ -7,42 +7,38 @@
     <title>Liste des personnages</title>
 </head>
 
-<body>
+<body class="body">
 
     <div>
-        <h2>Liste des personnages</h2>
-        <ul id="characterList">
-            <!-- La liste des personnages sera affichée ici -->
+        <h1>Liste des personnages</h1>
+
+        <ul>
+            <?php
+            # Fichier de connexion à la base de données
+            include 'app/db.conn.php';
+
+            # Requête pour récupérer tous les personnages
+            $sql = "SELECT id, nom, puissance, niveau, experience, defense FROM personnages";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+
+            # Boucle pour afficher les informations de chaque personnage
+            while ($row = $stmt->fetch()) {
+                $hp_affiche = ($row['niveau'] * 0.03) * $row['hp']; // Calcul des HP affichés
+            ?>
+                <li>
+                    <?php echo htmlspecialchars($row['nom']); ?> (ID: <?php echo $row['id']; ?>)<br>
+                    Puissance: <?php echo $row['puissance']; ?><br>
+                    Niveau: <?php echo $row['niveau']; ?><br>
+                    Expérience: <?php echo $row['experience']; ?><br>
+                    Défense: <?php echo $row['defense']; ?><br>
+                    HP: <?php echo $hp_affiche; ?> <!-- Affichage des HP calculés -->
+                </li>
+            <?php
+            }
+            ?>
         </ul>
     </div>
-
-    <script>
-        // Fonction pour afficher les personnages dans la liste
-        function afficherPersonnages(personnages) {
-            const characterList = document.getElementById('characterList');
-
-            // Effacer le contenu précédent de la liste
-            characterList.innerHTML = '';
-
-            // Parcourir chaque personnage et les ajouter à la liste
-            personnages.forEach(personnage => {
-                const listItem = document.createElement('li');
-                listItem.textContent = personnage.nom; // Changer ici pour afficher d'autres détails du personnage
-                characterList.appendChild(listItem);
-            });
-        }
-
-        // Fonction pour récupérer les personnages depuis l'API
-        function getPersonnages() {
-            fetch('app/api/get_characters.php')
-                .then(response => response.json())
-                .then(data => afficherPersonnages(data))
-                .catch(error => console.error('Erreur lors de la récupération des personnages:', error));
-        }
-
-        // Appeler la fonction pour récupérer les personnages au chargement de la page
-        getPersonnages();
-    </script>
 
 </body>
 
