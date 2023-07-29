@@ -18,16 +18,16 @@
             include 'app/db.conn.php';
 
             # Requête pour récupérer tous les personnages
-            $sql = "SELECT nom, puissance, defense, HP FROM personnages";
+            $sql = "SELECT nom, puissance, defense, HP, box.niveau_actuel AS lvl FROM personnages Join box on personnages.id = box.personnage_id WHERE box.joueur_id = 5";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
 
             # Boucle pour afficher les informations de chaque personnage
             while ($row = $stmt->fetch()) {
-                $hp_affiche = ($row['niveau'] * 0.03) * $row['HP']; // Calcul des HP affichés
+                $hp_affiche = ($row['lvl'] * 0.03) * $row['HP']; // Calcul des HP affichés
             ?>
                 <li>
-                    <?php echo htmlspecialchars($row['nom']); ?> (ID: <?php echo $row['id']; ?>)<br>
+                    <?php echo htmlspecialchars($row['nom']); ?><br>
                     Puissance: <?php echo $row['puissance']; ?><br>
                     Niveau: <?php echo $row['niveau']; ?><br>
                     Défense: <?php echo $row['defense']; ?><br>
