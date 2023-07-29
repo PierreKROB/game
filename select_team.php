@@ -1,7 +1,3 @@
-<?php
-session_start()
- ?>
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -41,8 +37,15 @@ session_start()
     <script>
         // Requête Fetch pour récupérer tous les personnages depuis l'API
         fetch("app/api/get_characters_player.php")
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("La requête a échoué : " + response.status);
+                }
+                return response.json();
+            })
             .then(data => {
+                console.log(data); // Afficher la réponse JSON dans la console
+
                 const charactersList = document.getElementById("characters-list");
 
                 // Afficher les personnages récupérés
