@@ -20,7 +20,7 @@
 
             // Faire une requête à l'API pour obtenir les détails des personnages sélectionnés
             // Assurez-vous de remplacer "app/api/get_character_details.php" par l'URL réelle de votre API
-            $url = "app/api/get_character_details.php?ids=" . implode(',', $personnages_ids);
+            $url = "app/api/get_characters_details.php?ids=" . implode(',', $personnages_ids);
             $response = file_get_contents($url);
 
             if ($response !== false) {
@@ -45,7 +45,7 @@
         }
         ?>
 
-        <a href="page_precedente.php">Revenir à la sélection d'équipe</a>
+        <a href="home.php">Revenir à la sélection d'équipe</a>
     </div>
 
 </body>
