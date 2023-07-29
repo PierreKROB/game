@@ -1,4 +1,4 @@
-document.getElementById("load-niveaux-button").addEventListener("click", () => {
+document.addEventListener("DOMContentLoaded", () => { 
     // Requête Fetch pour récupérer tous les niveaux depuis l'API
     fetch("app/api/get_niveaux.php")
         .then(response => response.json())
