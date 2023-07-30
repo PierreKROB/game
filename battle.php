@@ -18,23 +18,17 @@
         if (isset($_POST['personnages'])) {
             $personnages_ids = $_POST['personnages'];
 
-            // Faire une requête à l'API pour obtenir les détails des personnages sélectionnés
-            // Assurez-vous de remplacer "app/api/get_characters_details.php" par l'URL réelle de votre API
-            $url = "app/api/get_characters_details.php";
-            $data = array('ids' => implode(',', $personnages_ids));
+            // Inclure le fichier de connexion à la base de données
+            include_once 'db.conn.php';
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $url);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            // Préparer la requête SQL pour récupérer les détails des personnages sélectionnés
+            $placeholders = rtrim(str_repeat('?, ', count($personnages_ids)), ', ');
+            $sql = "SELECT * FROM personnages WHERE id IN ($placeholders)";
+            $stmt = $conn->prepare($sql);
+            $stmt->execute($personnages_ids);
+            $characters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            $response = curl_exec($ch);
-            curl_close($ch);
-
-            if ($response !== false) {
-                $characters = json_decode($response, true);
-
+            if (count($characters) > 0) {
                 // Afficher les informations des personnages sélectionnés
                 echo "<ul>";
                 foreach ($characters as $character) {
@@ -42,13 +36,16 @@
                     echo "Nom : " . $character['nom'] . "<br>";
                     echo "Niveau : " . $character['niveau'] . "<br>";
                     echo "Puissance : " . $character['puissance'] . "<br>";
-                    // Affichez d'autres informations que vous avez dans la réponse JSON
+                    // Affichez d'autres informations que vous avez dans le résultat de la requête
                     echo "</li>";
                 }
                 echo "</ul>";
             } else {
-                echo "Erreur lors de la récupération des détails des personnages depuis l'API.";
+                echo "Aucun personnage trouvé pour les IDs sélectionnés.";
             }
+
+            // Fermer la connexion à la base de données
+            $conn = null;
         } else {
             echo "<p>Aucun personnage n'a été sélectionné pour la bataille.</p>";
         }
