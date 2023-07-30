@@ -25,6 +25,9 @@
             <!-- Utiliser un champ caché pour envoyer le niveau_id avec le formulaire -->
             <input type="hidden" name="niveau_id" value="<?php echo $niveau_id; ?>">
 
+            <!-- Utiliser un champ caché pour envoyer les personnages_ids avec le formulaire -->
+            <input type="hidden" id="selected_characters" name="personnages" value="">
+
             <!-- Afficher la liste des personnages disponibles -->
             <ul id="characters-list">
                 <!-- Les personnages seront générés dynamiquement ici via JavaScript -->
@@ -66,6 +69,18 @@
                 });
             })
             .catch(error => console.error("Erreur lors de la récupération des personnages :", error));
+
+        // Nouveau code pour gérer l'envoi des personnages sélectionnés
+        const form = document.querySelector('form');
+        const selectedCharactersInput = document.getElementById('selected_characters');
+
+        form.addEventListener('submit', function(event) {
+            const selectedCharacters = Array.from(
+                document.querySelectorAll('input[name="personnages[]"]:checked')
+            ).map(characterCheckbox => characterCheckbox.value);
+
+            selectedCharactersInput.value = selectedCharacters.join(',');
+        });
     </script>
 </body>
 
