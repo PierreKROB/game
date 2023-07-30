@@ -61,7 +61,7 @@
                     const characterCheckbox = document.createElement("input");
                     characterCheckbox.type = "checkbox";
                     characterCheckbox.name = "personnages[]";
-                    characterCheckbox.value = personnage.id;
+                    characterCheckbox.value = personnage.id_perso;
 
                     characterLabel.appendChild(characterCheckbox);
                     characterItem.appendChild(characterLabel);
