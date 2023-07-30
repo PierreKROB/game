@@ -17,7 +17,7 @@
         // Vérifier si des personnages ont été sélectionnés
         if (isset($_POST['personnages'])) {
             $personnages_ids = explode(',', $_POST['personnages']);
-            var_dump($personnages_ids);
+            
             // Inclure le fichier de connexion à la base de données
             include_once 'db.conn.php';
 
