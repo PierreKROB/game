@@ -23,7 +23,7 @@ if (isset($_SESSION['username'])) {
                 <!-- Exemple de cartes de personnages, à remplir dynamiquement avec JavaScript -->
             </div>
             <button id="summon-button" class="button">Faire une invocation</button>
-            <button id="battle-button" class="button"><a href="select_lvl.php">Combattre</a></button>
+            <button id="battle-button" class="button"><a href="battle/select_lvl.php">Combattre</a></button>
             <button id="box-button" class="button"><a href="box.php">Ma box</a></button>
             <button id="logout" class="button"><a href="logout.php">Déconnexion</a></button>
             <div id="battle-log"></div>
