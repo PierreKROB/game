@@ -51,7 +51,7 @@
         }
         ?>
 
-        <a href="home.php">Revenir à la sélection d'équipe</a>
+        <a href="../home.php">Revenir à la sélection d'équipe</a>
     </div>
 
 </body>

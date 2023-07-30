@@ -36,7 +36,7 @@
 
     <script>
         // Requête Fetch pour récupérer tous les personnages depuis l'API
-        fetch("app/api/get_characters_player.php")
+        fetch("../app/api/get_characters_player.php")
             .then(response => {
                 if (!response.ok) {
                     throw new Error("La requête a échoué : " + response.status);
