@@ -17,7 +17,7 @@
         // Vérifier si des personnages ont été sélectionnés
         if (isset($_POST['personnages'])) {
             $personnages_ids = $_POST['personnages'];
-
+            var_dump($personnages_ids);
             // Inclure le fichier de connexion à la base de données
             include_once 'db.conn.php';
 
@@ -27,7 +27,7 @@
             $stmt = $conn->prepare($sql);
             $stmt->execute($personnages_ids);
             $characters = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+            
             if (count($characters) > 0) {
                 // Afficher les informations des personnages sélectionnés
                 echo "<ul>";
