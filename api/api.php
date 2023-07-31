@@ -11,20 +11,31 @@ function sendJSON($infos){
 
 
 class Character {
-    private $id;
-    private $name;
-    private $power;
+    private $id_perso;
+    private $nom;
+    private $puissance;
     private $defense;
-    private $hp;
+    private $HP;
     private $type;
+
+    public function __construct($id_perso, $nom, $puissance, $defense, $HP, $type) {
+        $this->id_perso = $id_perso;
+        $this->nom = $nom;
+        $this->puissance = $puissance;
+        $this->defense = $defense;
+        $this->HP = $HP;
+        $this->type = $type;
+    }
+
+    // Getters (No setters since we don't need to modify character details for this API)
 
     public function getDetails() {
         return [
-            "id" => $this->id,
-            "name" => $this->name,
-            "power" => $this->power,
+            "id" => $this->id_perso,
+            "name" => $this->nom,
+            "power" => $this->puissance,
             "defense" => $this->defense,
-            "hp" => $this->hp,
+            "hp" => $this->HP,
             "type" => $this->type
         ];
     }
