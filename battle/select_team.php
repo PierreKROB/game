@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 $user_id = $_SESSION['user_id'];
 ?>
@@ -14,6 +14,15 @@ $user_id = $_SESSION['user_id'];
         <?php
             // Vérifiez si l'utilisateur est connecté et récupérez son user_id
             
+
+            // Récupérez l'ID du niveau depuis l'URL
+            if (isset($_GET['niveau_id'])) {
+                $niveau_id = $_GET['niveau_id'];
+            } else {
+                // Gérer le cas où l'ID du niveau est manquant
+                echo "Erreur : l'ID du niveau est manquant.";
+                exit();
+            }
 
             // Obtenez la liste des personnages du joueur via l'API
             $api_url = "https://eligoal.com/game/api/characters_by_player/$user_id";
@@ -31,6 +40,10 @@ $user_id = $_SESSION['user_id'];
                     echo "<input type=\"checkbox\" name=\"selected_characters[]\" value=\"$character_id\"> $character_name <br>";
                 }
                 echo "<br>";
+
+                // Inclure l'ID du niveau dans le formulaire
+                echo "<input type=\"hidden\" name=\"niveau_id\" value=\"$niveau_id\">";
+
                 echo "<input type=\"submit\" value=\"Valider\">";
             }
         ?>
