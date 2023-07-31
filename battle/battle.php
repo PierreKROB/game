@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $selected_character = json_decode($selected_character_json, true);
 
             // Obtenir les statistiques de base du personnage
-            $base_hp = $selected_character['hp'];
+            $base_hp = $base_hp + $selected_character['hp'];
         }
     } else {
         echo "Erreur : les personnages sélectionnés ou l'ID du niveau sont manquants.";
