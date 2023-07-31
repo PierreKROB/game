@@ -28,15 +28,15 @@ if (isset($_SESSION['username'])) {
             <?php
             // Boucle pour afficher les informations de chaque personnage
             foreach ($characterDetails as $character) {
-                $hp_affiche = $character['hp'] * pow((1 + ($character['level'] / 100)), 2);
+                $hp_affiche = $character['hp'] * (1 + ($character['level'] / 100))**2;
                 $puissance_affiche = $character['power'] * pow((1 + ($character['level'] / 100)), 2);
                 $def_affiche = $character['defense'] * pow((1 + ($character['level'] / 100)), 2);
             ?>
                 <li>
                     <?php echo htmlspecialchars($character['name']); ?><br>
-                    Puissance: <?php echo number_format($puissance_affiche, 2); ?><br>
-                    Défense: <?php echo number_format($def_affiche, 2); ?><br>
-                    HP: <?php echo number_format($hp_affiche, 2); ?><br>
+                    Puissance: <?php echo number_format($character['power'], 2); ?><br>
+                    Défense: <?php echo number_format($character['defense'], 2); ?><br>
+                    HP: <?php echo number_format($character['hp']); ?><br>
                     Niveau: <?php echo $character['level']; ?><br>
                 </li>
             <?php
