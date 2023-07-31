@@ -64,7 +64,7 @@ class API
                     case "characters":
                         $this->getAllCharacters();
                         break;
-                    case "characters_by_player":
+                    case "player_characters":
                         if (!empty($url[1])) {
                             $this->getCharactersByPlayer($url[1]);
                         } else {
