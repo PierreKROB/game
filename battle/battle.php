@@ -2,17 +2,18 @@
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['characters_json']) && isset($_POST['niveau_id'])) {
-        $characters_json_encoded = $_POST['characters_json'];
-        $characters = json_decode($characters_json_encoded, true);
+    if (isset($_POST['selected_characters']) && isset($_POST['niveau_id'])) {
+        $selected_characters = $_POST['selected_characters'];
         $niveau_id = $_POST['niveau_id'];
 
         // Calculer les HP totaux de l'équipe en utilisant la formule donnée
         $total_hp = 0;
 
-        foreach ($characters as $character) {
+        foreach ($selected_characters as $selected_character_json) {
+            $selected_character = json_decode($selected_character_json, true);
+
             // Obtenir les statistiques de base du personnage
-            $base_hp = $character['hp'];
+            $base_hp = $selected_character['hp'];
 
             // Obtenir le niveau du personnage (vous devez récupérer le niveau du personnage depuis la base de données ou autre source)
             // Pour cet exemple, on suppose que le niveau du personnage est 1
