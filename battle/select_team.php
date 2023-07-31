@@ -1,3 +1,8 @@
+<?php 
+session_start();
+$user_id = $_SESSION['user_id'];
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,12 +13,7 @@
     <form action="battle.php" method="post">
         <?php
             // Vérifiez si l'utilisateur est connecté et récupérez son user_id
-            session_start();
-            if (!isset($_SESSION['user_id'])) {
-                header("Location: ../index.php");
-                exit;
-            }
-            $user_id = $_SESSION['user_id'];
+            
 
             // Obtenez la liste des personnages du joueur via l'API
             $api_url = "https://eligoal.com/game/api/characters_by_player/$user_id";
@@ -26,8 +26,8 @@
             } else {
                 // Affichez les cases à cocher pour chaque personnage
                 foreach ($characters as $character) {
-                    $character_id = $character['id_perso'];
-                    $character_name = $character['nom'];
+                    $character_id = $character['id'];
+                    $character_name = $character['name'];
                     echo "<input type=\"checkbox\" name=\"selected_characters[]\" value=\"$character_id\"> $character_name <br>";
                 }
                 echo "<br>";
