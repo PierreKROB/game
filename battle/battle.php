@@ -14,17 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Obtenir les statistiques de base du personnage
             $base_hp = $selected_character['hp'];
-
-            // Obtenir le niveau du personnage (vous devez récupérer le niveau du personnage depuis la base de données ou autre source)
-            // Pour cet exemple, on suppose que le niveau du personnage est 1
-            $niveau_personnage = 100;
-
-            // Calculer la statistique HP du personnage en utilisant la formule donnée
-            $multiplicateur_doublon = 1.0; // Vous devez définir le multiplicateur de doublon pour chaque personnage
-            $stat_hp = $base_hp * pow((1 + $niveau_personnage / 100), 2) * $multiplicateur_doublon;
-
-            // Ajouter la statistique HP calculée au total des HP de l'équipe
-            $total_hp += $stat_hp;
         }
     } else {
         echo "Erreur : les personnages sélectionnés ou l'ID du niveau sont manquants.";
