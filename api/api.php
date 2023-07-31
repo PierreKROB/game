@@ -1,16 +1,19 @@
 <?php
-function getConnexion(){
-    return new PDO("mysql:host=localhost;dbname=krpi8598_diarabattle;charset=utf8","krpi8598_admin","Afrique2015!");
+function getConnexion()
+{
+    return new PDO("mysql:host=localhost;dbname=krpi8598_diarabattle;charset=utf8", "krpi8598_admin", "Afrique2015!");
 }
 
-function sendJSON($infos){
+function sendJSON($infos)
+{
     header("Access-Control-Allow-Origin: *");
     header("Content-Type: application/json");
-    echo json_encode($infos,JSON_UNESCAPED_UNICODE);
+    echo json_encode($infos, JSON_UNESCAPED_UNICODE);
 }
 
 
-class Character {
+class Character
+{
     private $id_perso;
     private $nom;
     private $puissance;
@@ -18,7 +21,8 @@ class Character {
     private $HP;
     private $type;
 
-    public function __construct($id_perso, $nom, $puissance, $defense, $HP, $type) {
+    public function __construct($id_perso, $nom, $puissance, $defense, $HP, $type)
+    {
         $this->id_perso = $id_perso;
         $this->nom = $nom;
         $this->puissance = $puissance;
@@ -29,7 +33,8 @@ class Character {
 
     // Getters (No setters since we don't need to modify character details for this API)
 
-    public function getDetails() {
+    public function getDetails()
+    {
         return [
             "id" => $this->id_perso,
             "name" => $this->nom,
@@ -41,14 +46,17 @@ class Character {
     }
 }
 
-class API {
+class API
+{
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = getConnexion();
     }
 
-    public function handleRequest() {
+    public function handleRequest()
+    {
         try {
             if (!empty($_GET['request'])) {
                 $url = explode("/", filter_var($_GET['request'], FILTER_SANITIZE_URL));
@@ -62,6 +70,9 @@ class API {
                         } else {
                             throw new Exception("Player ID not provided.");
                         }
+                        break;
+                    case "niveaux": // Ajout du nouveau cas pour les niveaux
+                        $this->getNiveaux();
                         break;
                     default:
                         throw new Exception("Invalid request, check the URL.");
@@ -78,9 +89,10 @@ class API {
         }
     }
 
-    private function getAllCharacters() {
+    private function getAllCharacters()
+    {
         $query = "SELECT * FROM personnages"; // Updated query to select all columns (*)
-    
+
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $characters = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -96,17 +108,18 @@ class API {
                 $characterData['type']
             );
         }
-    
+
         $characterDetails = array_map(function ($character) {
             return $character->getDetails();
         }, $characterObjects);
-    
+
         sendJSON($characterDetails);
     }
-    
-    
 
-    private function getCharactersByPlayer($playerId) {
+
+
+    private function getCharactersByPlayer($playerId)
+    {
         $query = "SELECT personnages.*
                   FROM personnages
                   INNER JOIN box ON personnages.id_perso = box.personnage_id
@@ -134,6 +147,16 @@ class API {
         }, $characterObjects);
 
         sendJSON($characterDetails);
+    }
+
+    private function getNiveaux() {
+        $query = "SELECT * FROM niveau";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $niveaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        sendJSON($niveaux);
     }
 }
 

@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => { 
     // Requête Fetch pour récupérer tous les niveaux depuis l'API
-    fetch("../app/api/get_niveaux.php")
+    fetch("https://eligoal.com/game/api/niveaux")
         .then(response => response.json())
         .then(data => {
             const niveauxList = document.getElementById("niveaux-list");
