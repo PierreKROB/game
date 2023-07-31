@@ -3,10 +3,11 @@ session_start();
 if (isset($_SESSION['username'])) {
     $user_id = $_SESSION['user_id'];
     $api_url = "https://eligoal.com/game/api/player_characters/$user_id";
-
+    
     // Utilisation de file_get_contents pour accéder à l'API
     $characters_json = file_get_contents($api_url);
     $characterDetails = json_decode($characters_json, true);
+    var_dump($characterDetails);
 
     if ($characterDetails !== null) {
 ?>
