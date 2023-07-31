@@ -33,6 +33,17 @@ $user_id = $_SESSION['user_id'];
             if (empty($characters)) {
                 echo "Aucun personnage trouvé pour cet utilisateur.";
             } else {
+                // Affichez les personnages avec leurs statistiques
+                foreach ($characters as $character) {
+                    $character_id = $character['id'];
+                    $character_name = $character['name'];
+                    $character_hp = $character['hp'];
+
+                    // Affichage des statistiques du personnage
+                    echo "<p>$character_name - HP: $character_hp</p>";
+                    echo "<input type=\"checkbox\" name=\"selected_characters[]\" value=\"$character_id\"> Sélectionner<br>";
+                }
+
                 // Encodez les informations des personnages en JSON pour les passer à la page "battle.php"
                 $characters_json_encoded = json_encode($characters);
                 echo "<input type=\"hidden\" name=\"characters_json\" value='$characters_json_encoded'>";
