@@ -149,13 +149,13 @@ class API
             $doublon = $characterData['doublon'];
             $multiplicateur = 1.0;
 
-            if ($doublon === 1) {
+            if ($doublon == 1) {
                 $multiplicateur = 1.1;
-            } elseif ($doublon === 2) {
+            } elseif ($doublon == 2) {
                 $multiplicateur = 1.175;
-            } elseif ($doublon === 3) {
+            } elseif ($doublon == 3) {
                 $multiplicateur = 1.2;
-            } elseif ($doublon === 4) {
+            } elseif ($doublon == 4) {
                 $multiplicateur = 1.245;
             }
 
