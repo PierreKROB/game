@@ -7,7 +7,6 @@ if (isset($_SESSION['username'])) {
     // Utilisation de file_get_contents pour accéder à l'API
     $characters_json = file_get_contents($api_url);
     $characterDetails = json_decode($characters_json, true);
-    var_dump($characterDetails);
 
     if ($characterDetails !== null) {
 ?>
