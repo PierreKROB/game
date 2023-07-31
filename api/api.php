@@ -68,29 +68,31 @@ class API {
     }
 
     private function getAllCharacters() {
-        $query = "SELECT * FROM personnages";
+        $query = "SELECT * FROM personnages"; // Updated query to select all columns (*)
+    
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $characters = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+    
         $characterObjects = [];
         foreach ($characters as $characterData) {
             $characterObjects[] = new Character(
-                $characterData['id_perso'],
-                $characterData['nom'],
-                $characterData['puissance'],
+                $characterData['id_perso'], // Correct column name: 'id_perso' instead of 'id'
+                $characterData['nom'],      // Correct column name: 'nom' instead of 'name'
+                $characterData['puissance'], // Correct column name: 'puissance' instead of 'power'
                 $characterData['defense'],
-                $characterData['HP'],
+                $characterData['HP'],       // Correct column name: 'HP' instead of 'hp'
                 $characterData['type']
             );
         }
-
+    
         $characterDetails = array_map(function ($character) {
             return $character->getDetails();
         }, $characterObjects);
-
+    
         sendJSON($characterDetails);
     }
+    
 
     private function getCharactersByPlayer($playerId) {
         $query = "SELECT personnages.*
