@@ -158,18 +158,20 @@ class API
     private function getCharacters($id_perso)
     {
         $query = "SELECT personnages.*
-                  FROM personnages
-                  WHERE id_perso = :id_perso";
+              FROM personnages
+              WHERE id_perso = :id_perso";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id_perso', $id_perso, PDO::PARAM_INT);
         $stmt->execute();
-        $characterData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $characterData = $stmt->fetch(PDO::FETCH_ASSOC); // Use fetch() instead of fetchAll()
 
         if (!$characterData) {
-            return null;
+            // If no character found with the given id, return null or an error message
+            throw new Exception("Character not found with ID: $id_perso");
         }
 
+        // Create a Character object using the fetched data
         $character = new Character(
             $characterData['id_perso'],
             $characterData['nom'],
@@ -178,8 +180,10 @@ class API
             $characterData['HP'],
             $characterData['type']
         );
-        return sendJSON($character);
+
+        sendJSON($character->getDetails());
     }
+
 
     private function getNiveaux()
     {
