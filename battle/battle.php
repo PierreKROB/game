@@ -2,29 +2,28 @@
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['selected_characters']) && isset($_POST['niveau_id'])) {
-        $selected_characters = $_POST['selected_characters'];
+    if (isset($_POST['characters_json']) && isset($_POST['niveau_id'])) {
+        $characters_json_encoded = $_POST['characters_json'];
+        $characters = json_decode($characters_json_encoded, true);
         $niveau_id = $_POST['niveau_id'];
 
-        // Obtenir la liste des personnages sélectionnés
-        $selected_characters_info = array();
-
-        foreach ($selected_characters as $character_id) {
-            $api_url = "https://eligoal.com/game/api/characters/$character_id";
-            $character_json = file_get_contents($api_url);
-            $character_info = json_decode($character_json, true);
-
-            // Ajouter les informations du personnage (y compris les HP) à la liste
-            if (!empty($character_info)) {
-                $selected_characters_info[] = $character_info;
-            }
-        }
-
-        // Calculer les HP totaux de l'équipe
+        // Calculer les HP totaux de l'équipe en utilisant la formule donnée
         $total_hp = 0;
 
-        foreach ($selected_characters_info as $character_info) {
-            $total_hp += $character_info['hp'];
+        foreach ($characters as $character) {
+            // Obtenir les statistiques de base du personnage
+            $base_hp = $character['hp'];
+
+            // Obtenir le niveau du personnage (vous devez récupérer le niveau du personnage depuis la base de données ou autre source)
+            // Pour cet exemple, on suppose que le niveau du personnage est 1
+            $niveau_personnage = 100;
+
+            // Calculer la statistique HP du personnage en utilisant la formule donnée
+            $multiplicateur_doublon = 1.0; // Vous devez définir le multiplicateur de doublon pour chaque personnage
+            $stat_hp = $base_hp * pow((1 + $niveau_personnage / 100), 2) * $multiplicateur_doublon;
+
+            // Ajouter la statistique HP calculée au total des HP de l'équipe
+            $total_hp += $stat_hp;
         }
     } else {
         echo "Erreur : les personnages sélectionnés ou l'ID du niveau sont manquants.";

@@ -24,7 +24,7 @@ $user_id = $_SESSION['user_id'];
                 exit();
             }
 
-            // Obtenez la liste des personnages du joueur via l'API
+            // Obtenez la liste des personnages du joueur via l'API avec leurs statistiques
             $api_url = "https://eligoal.com/game/api/player_characters/$user_id";
             $characters_json = file_get_contents($api_url);
             $characters = json_decode($characters_json, true);
@@ -33,13 +33,9 @@ $user_id = $_SESSION['user_id'];
             if (empty($characters)) {
                 echo "Aucun personnage trouvé pour cet utilisateur.";
             } else {
-                // Affichez les cases à cocher pour chaque personnage
-                foreach ($characters as $character) {
-                    $character_id = $character['id'];
-                    $character_name = $character['name'];
-                    echo "<input type=\"checkbox\" name=\"selected_characters[]\" value=\"$character_id\"> $character_name <br>";
-                }
-                echo "<br>";
+                // Encodez les informations des personnages en JSON pour les passer à la page "battle.php"
+                $characters_json_encoded = json_encode($characters);
+                echo "<input type=\"hidden\" name=\"characters_json\" value='$characters_json_encoded'>";
 
                 // Inclure l'ID du niveau dans le formulaire
                 echo "<input type=\"hidden\" name=\"niveau_id\" value=\"$niveau_id\">";
