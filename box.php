@@ -52,6 +52,7 @@ if (isset($_SESSION['username'])) {
 <?php
     } else {
         echo "Erreur lors de la récupération des données depuis l'API.";
+        echo "feur";
     }
 } else {
     header("Location: index.php");
