@@ -2,7 +2,7 @@
 session_start();
 if (isset($_SESSION['username'])) {
     $user_id = $_SESSION['user_id'];
-    $api_url = "api/characters/$user_id";
+    $api_url = "api/characters_by_player/$user_id";
 
     // Utilisation de file_get_contents pour accéder à l'API
     $characters_json = file_get_contents($api_url);
@@ -52,7 +52,7 @@ if (isset($_SESSION['username'])) {
 <?php
     } else {
         echo "Erreur lors de la récupération des données depuis l'API.";
-        echo "feur";
+        echo "quentin";
     }
 } else {
     header("Location: index.php");
