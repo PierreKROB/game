@@ -4,7 +4,6 @@ if (isset($_SESSION['username'])) {
     
 ?>
 
-
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -20,28 +19,37 @@ if (isset($_SESSION['username'])) {
         <h1>Liste des personnages</h1>
         <ul>
             <?php
-            # Fichier de connexion à la base de données
-            include 'app/db.conn.php';
             $user_id = $_SESSION['user_id'];
-            # Requête pour récupérer tous les personnages
-            $sql = "SELECT nom, puissance, defense, HP, box.niveau_actuel AS lvl FROM personnages Join box on personnages.id_perso = box.personnage_id WHERE box.joueur_id = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute([$user_id]);
+            $api_url = "http://votre-api.com/api.php?demande=personnages/$user_id";
 
-            # Boucle pour afficher les informations de chaque personnage
-            while ($row = $stmt->fetch()) {
-                $hp_affiche = $row['HP']* (1+($row['lvl'])/100)**2;
-                $puissance_affiche = $row['puissance']* (1+($row['lvl'])/100)**2;
-                $def_affiche = $row['defense']* (1+($row['lvl'])/100)**2;
+            // Utilisation de cURL pour effectuer la requête à l'API
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_URL, $api_url);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($curl);
+            $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            curl_close($curl);
+
+            if ($http_code == 200) {
+                $characterDetails = json_decode($response, true);
+
+                // Boucle pour afficher les informations de chaque personnage
+                foreach ($characterDetails as $character) {
+                    $hp_affiche = $character['hp'] * pow((1 + ($character['lvl'] / 100)), 2);
+                    $puissance_affiche = $character['power'] * pow((1 + ($character['lvl'] / 100)), 2);
+                    $def_affiche = $character['defense'] * pow((1 + ($character['lvl'] / 100)), 2);
             ?>
-                <li>
-                    <?php echo htmlspecialchars($row['nom']); ?><br>
-                    Puissance: <?php echo $puissance_affiche; ?><br>
-                    Défense: <?php echo $def_affiche; ?><br>
-                    HP: <?php echo $hp_affiche; ?><br>
-                    Niveau: <?php echo $row['lvl']; ?><br>
-                </li>
+                    <li>
+                        <?php echo htmlspecialchars($character['name']); ?><br>
+                        Puissance: <?php echo number_format($puissance_affiche, 2); ?><br>
+                        Défense: <?php echo number_format($def_affiche, 2); ?><br>
+                        HP: <?php echo number_format($hp_affiche, 2); ?><br>
+                        Niveau: <?php echo $character['lvl']; ?><br>
+                    </li>
             <?php
+                }
+            } else {
+                echo "Erreur lors de la récupération des données depuis l'API.";
             }
             ?>
         </ul>
