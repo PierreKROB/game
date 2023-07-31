@@ -9,9 +9,7 @@ session_start();
 </head>
 <body>
     <h1>Équipe de combat</h1>
-    <?php
-        // Vérifiez si l'utilisateur est connecté et récupérez son user_id
-        
+    <?php      
         // Vérifiez si des personnages ont été sélectionnés
         if (isset($_POST['selected_characters']) && !empty($_POST['selected_characters'])) {
             // Obtenez les personnages sélectionnés et affichez-les sous forme de tableau
