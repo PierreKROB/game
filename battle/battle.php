@@ -1,86 +1,35 @@
+<?php 
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Combat en temps réel</title>
+    <title>Équipe de combat</title>
 </head>
 <body>
-    <div>
-        <h1>Combat en temps réel</h1>
-        <div>
-            <h2>Joueur</h2>
-            <div>
-                <p>Nom : <span id="player-name">Joueur 1</span></p>
-                <p>Points de vie : <span id="player-hp">100</span></p>
-            </div>
-            <button id="attack-button">Attaquer</button>
-        </div>
-        <div>
-            <h2>Adversaire</h2>
-            <div>
-                <p>Nom : <span id="enemy-name">Adversaire 1</span></p>
-                <p>Points de vie : <span id="enemy-hp">100</span></p>
-            </div>
-        </div>
-    </div>
+    <h1>Équipe de combat</h1>
+    <?php      
+        // Vérifiez si des personnages ont été sélectionnés
+        if (isset($_POST['selected_characters']) && !empty($_POST['selected_characters'])) {
+            // Ajouter une ligne de débogage pour afficher les données reçues
+            echo "<pre>";
+            var_dump($_POST['selected_characters']);
+            echo "</pre>";
 
-    <script>
-        // Fonction pour mettre à jour les points de vie affichés
-        function updateHP(character, hp) {
-            if (character === 'player') {
-                document.getElementById('player-hp').textContent = hp;
-            } else if (character === 'enemy') {
-                document.getElementById('enemy-hp').textContent = hp;
+            // Obtenez les personnages sélectionnés et affichez-les sous forme de tableau
+            echo "HP: $HP";
+            foreach ($_POST['selected_characters'] as $selected_character_id) {
+                // Vous pouvez également utiliser l'API pour obtenir plus d'informations sur chaque personnage ici
+                echo "<tr>
+                        <td>$selected_character_id</td>
+                        <td>Personnage $selected_character_id</td>
+                      </tr>";
             }
+            echo "</table>";
+        } else {
+            echo "Aucun personnage sélectionné. Veuillez retourner à la page précédente et en sélectionner au moins un.";
         }
-
-        // Fonction pour gérer l'attaque
-        function attack() {
-            // Ici, vous enverrez une requête AJAX à l'API pour calculer les dégâts infligés à l'adversaire
-            // et mettez à jour les points de vie en conséquence
-            // Remplacez cette partie par votre propre code
-            let playerHP = parseInt(document.getElementById('player-hp').textContent);
-            let enemyHP = parseInt(document.getElementById('enemy-hp').textContent);
-
-            // Exemple de dégâts infligés (vous pouvez remplacer cette partie par votre propre logique de combat)
-            let damage = Math.floor(Math.random() * 20) + 10;
-            enemyHP -= damage;
-
-            updateHP('enemy', enemyHP);
-
-            // Vérifiez si l'adversaire est vaincu
-            if (enemyHP <= 0) {
-                alert('L\'adversaire a été vaincu !');
-            }
-        }
-
-        // Événement pour l'attaque lorsque le bouton est cliqué
-        document.getElementById('attack-button').addEventListener('click', () => {
-            attack();
-        });
-
-        // Répétez la requête AJAX périodiquement pour mettre à jour les points de vie en temps réel
-        setInterval(() => {
-            // Ici, vous enverrez une requête AJAX à l'API pour récupérer les points de vie des combattants
-            // et mettez à jour l'interface en conséquence
-            // Remplacez cette partie par votre propre code
-            let playerHP = parseInt(document.getElementById('player-hp').textContent);
-            let enemyHP = parseInt(document.getElementById('enemy-hp').textContent);
-
-            // Exemple de mise à jour des points de vie (vous pouvez remplacer cette partie par votre propre logique de récupération)
-            playerHP -= 5;
-            enemyHP -= 3;
-
-            // Mettez à jour l'interface avec les nouvelles valeurs de points de vie
-            updateHP('player', playerHP);
-            updateHP('enemy', enemyHP);
-
-            // Vérifiez si l'un des combattants est vaincu
-            if (playerHP <= 0 || enemyHP <= 0) {
-                alert('Le combat est terminé !');
-                // Ici, vous pouvez effectuer d'autres actions après la fin du combat
-            }
-        }, 1000); // Répétez toutes les 1000 millisecondes (1 seconde)
-    </script>
+    ?>
 </body>
 </html>
