@@ -84,10 +84,7 @@ class API {
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $characters = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
-        // Debugging line to check the fetched data
-        print_r($characters);
-    
+
         $characterObjects = [];
         foreach ($characters as $characterData) {
             $characterObjects[] = new Character(
