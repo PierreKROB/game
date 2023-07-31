@@ -12,6 +12,7 @@ session_start()
 
 <body>
     <h1>Liste des niveaux disponibles</h1>
+    <h2>catégorie</h2>
     <ul id="niveaux-list">
         <!-- Les niveaux seront affichés ici -->
     </ul>
