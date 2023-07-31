@@ -1,3 +1,7 @@
+<?php 
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,12 +11,7 @@
     <h1>Équipe de combat</h1>
     <?php
         // Vérifiez si l'utilisateur est connecté et récupérez son user_id
-        session_start();
-        if (!isset($_SESSION['user_id'])) {
-            echo "Vous devez être connecté pour accéder à cette page.";
-            exit;
-        }
-
+        
         // Vérifiez si des personnages ont été sélectionnés
         if (isset($_POST['selected_characters']) && !empty($_POST['selected_characters'])) {
             // Obtenez les personnages sélectionnés et affichez-les sous forme de tableau
