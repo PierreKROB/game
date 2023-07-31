@@ -39,7 +39,7 @@ $user_id = $_SESSION['user_id'];
                     $character_name = $character['name'];
                     $niveau_personnage = $character['level'];
                     $multiplicateur_doublon= $character['doublon'];
-                    $character_hp = $character['hp'] * pow((1 + $niveau_personnage / 100), 2) * $multiplicateur_doublon;
+                    $character_hp = $character['hp'] ;
 
                     // Affichage des statistiques du personnage avec une case à cocher
                     echo "<label>";
