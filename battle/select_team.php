@@ -25,7 +25,7 @@ $user_id = $_SESSION['user_id'];
             }
 
             // Obtenez la liste des personnages du joueur via l'API
-            $api_url = "https://eligoal.com/game/api/characters_by_player/$user_id";
+            $api_url = "https://eligoal.com/game/api/player_characters/$user_id";
             $characters_json = file_get_contents($api_url);
             $characters = json_decode($characters_json, true);
 
