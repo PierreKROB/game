@@ -21,16 +21,51 @@
                 $niveau_id = $_GET['niveau_id'];
             }
             ?>
+            <!-- Afficher le niveau sélectionné -->
+            <?php
+            if (isset($niveau_id)) {
+                echo "<p>Vous avez choisi le niveau $niveau_id.</p>";
+            }
+            ?>
 
-            <!-- Utiliser un champ caché pour envoyer le niveau_id avec le formulaire -->
-            <input type="hidden" name="niveau_id" value="<?php echo $niveau_id; ?>">
+            <label for="personnages">Sélectionnez vos personnages :</label>
+            <select name="personnages[]" id="personnages" multiple>
+                <!-- Ici, tu devrais récupérer les personnages depuis l'API et les afficher sous forme d'options -->
+                <!-- Par exemple, tu peux utiliser une boucle pour afficher tous les personnages disponibles -->
+                <?php
+                // Remplacez cette partie par une requête à l'API pour récupérer les personnages
+                // et les afficher sous forme d'options dans le menu déroulant.
+                $personnages = array(
+                    array('id' => 1, 'name' => 'Personnage 1'),
+                    array('id' => 2, 'name' => 'Personnage 2'),
+                    array('id' => 3, 'name' => 'Personnage 3')
+                );
 
-            <!-- Utiliser un champ caché pour envoyer les personnages_ids avec le formulaire -->
+                foreach ($personnages as $personnage) {
+                    echo "<option value='" . $personnage['id'] . "'>" . $personnage['name'] . "</option>";
+                }
+                ?>
+            </select>
+
+            <input type="submit" value="Commencer la bataille">
+        </form>
+
+    </div>
+
+</body>
+
+</html>
+
+
+            <!-- Utiliser un champ caché pour envoyer le niveau_id avec le formulaire
+            <input type="hidden" name="niveau_id" value='<?php echo $niveau_id; ?>'>
+
+           
             <input type="hidden" id="selected_characters" name="personnages" value="">
 
-            <!-- Afficher la liste des personnages disponibles -->
+        
             <ul id="characters-list">
-                <!-- Les personnages seront générés dynamiquement ici via JavaScript -->
+         
             </ul>
 
             <button type="submit">Démarrer le niveau</button>
@@ -84,4 +119,4 @@
     </script>
 </body>
 
-</html>
+</html> -->
