@@ -2,13 +2,20 @@
 session_start();
 if (isset($_SESSION['username'])) {
     $user_id = $_SESSION['user_id'];
-    $api_url = "api/characters_by_player/$user_id";
+    $api_url = "api.php?request=characters/$user_id";
 
-    // Utilisation de file_get_contents pour accéder à l'API
-    $characters_json = file_get_contents($api_url);
-    $characterDetails = json_decode($characters_json, true);
+    // Utilisation de cURL pour effectuer la requête à l'API
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_URL, $api_url);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($curl);
+    $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+    curl_close($curl);
 
-    if ($characterDetails !== null) {
+    if ($http_code == 200) {
+        $characterDetails = json_decode($response, true);
+
+        if (count($characterDetails) > 0) {
 ?>
 
 <!DOCTYPE html>
@@ -50,9 +57,11 @@ if (isset($_SESSION['username'])) {
 </html>
 
 <?php
+        } else {
+            echo "Aucun personnage trouvé pour ce joueur.";
+        }
     } else {
         echo "Erreur lors de la récupération des données depuis l'API.";
-        echo "quentin";
     }
 } else {
     header("Location: index.php");
