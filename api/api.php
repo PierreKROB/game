@@ -20,8 +20,10 @@ class Character
     private $defense;
     private $HP;
     private $type;
+    private $niveau; // New property for character's level
+    private $doublon; // New property for character's doublon
 
-    public function __construct($id_perso, $nom, $puissance, $defense, $HP, $type)
+    public function __construct($id_perso, $nom, $puissance, $defense, $HP, $type, $niveau, $doublon)
     {
         $this->id_perso = $id_perso;
         $this->nom = $nom;
@@ -29,6 +31,8 @@ class Character
         $this->defense = $defense;
         $this->HP = $HP;
         $this->type = $type;
+        $this->niveau = $niveau;
+        $this->doublon = $doublon;
     }
 
     // Getters (No setters since we don't need to modify character details for this API)
@@ -41,7 +45,9 @@ class Character
             "power" => $this->puissance,
             "defense" => $this->defense,
             "hp" => $this->HP,
-            "type" => $this->type
+            "type" => $this->type,
+            "level" => $this->niveau, // Include character's level
+            "doublon" => $this->doublon // Include character's doublon
         ];
     }
 }
@@ -110,7 +116,9 @@ class API
                 $characterData['puissance'], // Correct column name: 'puissance' instead of 'power'
                 $characterData['defense'],
                 $characterData['HP'],       // Correct column name: 'HP' instead of 'hp'
-                $characterData['type']
+                $characterData['type'],
+                0,
+                0
             );
         }
 
@@ -162,7 +170,9 @@ class API
                 $puissance,
                 $defense,
                 $HP,
-                $characterData['type']
+                $characterData['type'],
+                $characterLevel,
+                $doublon
             );
         }
 
@@ -199,7 +209,9 @@ class API
             $characterData['puissance'],
             $characterData['defense'],
             $characterData['HP'],
-            $characterData['type']
+            $characterData['type'],
+            0,
+            0
         );
 
         sendJSON($character->getDetails());
