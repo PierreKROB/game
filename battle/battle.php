@@ -1,59 +1,37 @@
 <!DOCTYPE html>
-<html lang="fr">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bataille</title>
+    <title>Équipe de combat</title>
 </head>
-
-<body class="body">
-
-    <div>
-        <h1>Votre équipe pour la bataille</h1>
-        <p>Voici les personnages que vous avez sélectionnés pour affronter le niveau :</p>
-
-        <?php
-        // Vérifier si des personnages ont été sélectionnés
-        if (isset($_POST['personnages'])) {
-            $personnages_ids = explode(',', $_POST['personnages']);
-            
-            // Inclure le fichier de connexion à la base de données
-            include_once 'db.conn.php';
-
-            // Préparer la requête SQL pour récupérer les détails des personnages sélectionnés
-            $placeholders = rtrim(str_repeat('?, ', count($personnages_ids)), ', ');
-            $sql = "SELECT * FROM personnages WHERE id IN ($placeholders)";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute($personnages_ids);
-            $characters = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            if (count($characters) > 0) {
-                // Afficher les informations des personnages sélectionnés
-                echo "<ul>";
-                foreach ($characters as $character) {
-                    echo "<li>";
-                    echo "Nom : " . $character['nom'] . "<br>";
-                    echo "Niveau : " . $character['niveau'] . "<br>";
-                    echo "Puissance : " . $character['puissance'] . "<br>";
-                    // Affichez d'autres informations que vous avez dans le résultat de la requête
-                    echo "</li>";
-                }
-                echo "</ul>";
-            } else {
-                echo "Aucun personnage trouvé pour les IDs sélectionnés.";
-            }
-
-            // Fermer la connexion à la base de données
-            $conn = null;
-        } else {
-            echo "<p>Aucun personnage n'a été sélectionné pour la bataille.</p>";
+<body>
+    <h1>Équipe de combat</h1>
+    <?php
+        // Vérifiez si l'utilisateur est connecté et récupérez son user_id
+        session_start();
+        if (!isset($_SESSION['user_id'])) {
+            echo "Vous devez être connecté pour accéder à cette page.";
+            exit;
         }
-        ?>
 
-        <a href="../home.php">Revenir à la sélection d'équipe</a>
-    </div>
-
+        // Vérifiez si des personnages ont été sélectionnés
+        if (isset($_POST['selected_characters']) && !empty($_POST['selected_characters'])) {
+            // Obtenez les personnages sélectionnés et affichez-les sous forme de tableau
+            echo "<table border='1'>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                    </tr>";
+            foreach ($_POST['selected_characters'] as $selected_character_id) {
+                // Vous pouvez également utiliser l'API pour obtenir plus d'informations sur chaque personnage ici
+                echo "<tr>
+                        <td>$selected_character_id</td>
+                        <td>Personnage $selected_character_id</td>
+                      </tr>";
+            }
+            echo "</table>";
+        } else {
+            echo "Aucun personnage sélectionné. Veuillez retourner à la page précédente et en sélectionner au moins un.";
+        }
+    ?>
 </body>
-
 </html>
