@@ -1,73 +1,127 @@
 <?php
+function getConnexion(){
+    return new PDO("mysql:host=localhost;dbname=fh2prog;charset=utf8","root","root");
+}
 
-class Formation {
+function sendJSON($infos){
+    header("Access-Control-Allow-Origin: *");
+    header("Content-Type: application/json");
+    echo json_encode($infos,JSON_UNESCAPED_UNICODE);
+}
+
+
+class Character {
     private $id;
-    private $categorie;
+    private $name;
+    private $power;
+    private $defense;
+    private $hp;
+    private $type;
 
-    public function __construct($id, $categorie) {
-        $this->id = $id;
-        $this->categorie = $categorie;
-    }
-
-    // Getters and setters (if needed)
-
-    public function afficherDetails() {
-        echo "Affichage de la formation avec l'ID : " . $this->id;
+    public function getDetails() {
+        return [
+            "id" => $this->id,
+            "name" => $this->name,
+            "power" => $this->power,
+            "defense" => $this->defense,
+            "hp" => $this->hp,
+            "type" => $this->type
+        ];
     }
 }
 
 class API {
+    private $db;
+
+    public function __construct() {
+        $this->db = getConnexion();
+    }
+
     public function handleRequest() {
         try {
-            if (!empty($_GET['demande'])) {
-                $url = explode("/", filter_var($_GET['demande'], FILTER_SANITIZE_URL));
+            if (!empty($_GET['request'])) {
+                $url = explode("/", filter_var($_GET['request'], FILTER_SANITIZE_URL));
                 switch ($url[0]) {
-                    case "formations":
-                        if (empty($url[1])) {
-                            $this->getFormations();
-                        } else {
-                            $this->getFormationsByCategorie($url[1]);
-                        }
+                    case "characters":
+                        $this->getAllCharacters();
                         break;
-                    case "formation":
+                    case "characters_by_player":
                         if (!empty($url[1])) {
-                            $this->getFormationById($url[1]);
+                            $this->getCharactersByPlayer($url[1]);
                         } else {
-                            throw new Exception("Vous n'avez pas renseigné le numéro de formations");
+                            throw new Exception("Player ID not provided.");
                         }
                         break;
                     default:
-                        throw new Exception("La demande n'est pas valide, vérifiez l'url");
+                        throw new Exception("Invalid request, check the URL.");
                 }
             } else {
-                throw new Exception("problème de récupération de données.");
+                throw new Exception("Data retrieval problem.");
             }
         } catch (Exception $e) {
-            $erreur = [
+            $error = [
                 "message" => $e->getMessage(),
                 "code" => $e->getCode()
             ];
-            print_r($erreur);
+            print_r($error);
         }
     }
 
-    private function getFormations() {
-        echo "Liste des formations";
+    private function getAllCharacters() {
+        $query = "SELECT * FROM personnages";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $characters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $characterObjects = [];
+        foreach ($characters as $characterData) {
+            $characterObjects[] = new Character(
+                $characterData['id_perso'],
+                $characterData['nom'],
+                $characterData['puissance'],
+                $characterData['defense'],
+                $characterData['HP'],
+                $characterData['type']
+            );
+        }
+
+        $characterDetails = array_map(function ($character) {
+            return $character->getDetails();
+        }, $characterObjects);
+
+        sendJSON($characterDetails);
     }
 
-    private function getFormationsByCategorie($categorie) {
-        echo "Liste des formations par catégories";
-    }
+    private function getCharactersByPlayer($playerId) {
+        $query = "SELECT personnages.*
+                  FROM personnages
+                  INNER JOIN box ON personnages.id_perso = box.personnage_id
+                  WHERE box.joueur_id = :playerId";
 
-    private function getFormationById($id) {
-        // Ici, vous pouvez créer un objet Formation et utiliser sa méthode afficherDetails() pour afficher les détails de la formation.
-        $formation = new Formation($id, "Catégorie de la formation");
-        $formation->afficherDetails();
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':playerId', $playerId, PDO::PARAM_INT);
+        $stmt->execute();
+        $characters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $characterObjects = [];
+        foreach ($characters as $characterData) {
+            $characterObjects[] = new Character(
+                $characterData['id_perso'],
+                $characterData['nom'],
+                $characterData['puissance'],
+                $characterData['defense'],
+                $characterData['HP'],
+                $characterData['type']
+            );
+        }
+
+        $characterDetails = array_map(function ($character) {
+            return $character->getDetails();
+        }, $characterObjects);
+
+        sendJSON($characterDetails);
     }
 }
 
-// Utilisez ces classes dans votre index.php ou tout autre point d'entrée de votre application
 $api = new API();
 $api->handleRequest();
-
-?>
