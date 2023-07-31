@@ -42,8 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <h1>Équipe de combat</h1>
-    <?php if (isset($total_hp)) : ?>
-        <p>Montant total des points de vie de l'équipe : <?php echo $total_hp; ?></p>
+    <?php if (isset($base_hp)) : ?>
+        <p>Montant total des points de vie de l'équipe : <?php echo $base_hp; ?></p>
     <?php endif; ?>
     <!-- Afficher d'autres informations sur l'équipe de combat si nécessaire -->
 </body>

@@ -37,7 +37,9 @@ $user_id = $_SESSION['user_id'];
                 foreach ($characters as $character) {
                     $character_id = $character['id'];
                     $character_name = $character['name'];
-                    $character_hp = $character['hp'];
+                    $niveau_personnage = $character['level'];
+                    $multiplicateur_doublon= $character['doublon'];
+                    $character_hp = $character['hp'] * pow((1 + $niveau_personnage / 100), 2) * $multiplicateur_doublon;
 
                     // Affichage des statistiques du personnage avec une case à cocher
                     echo "<label>";

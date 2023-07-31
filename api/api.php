@@ -125,7 +125,7 @@ class API
 
     private function getCharactersByPlayer($playerId)
     {
-        $query = "SELECT personnages.*
+        $query = "SELECT personnages.*, box.niveau_actuel, box.doublon
                   FROM personnages
                   INNER JOIN box ON personnages.id_perso = box.personnage_id
                   WHERE box.joueur_id = :playerId";
@@ -137,12 +137,31 @@ class API
 
         $characterObjects = [];
         foreach ($characters as $characterData) {
+            $characterLevel = $characterData['niveau_actuel'];
+            $doublon = $characterData['doublon'];
+            $multiplicateur = 1.0;
+
+            if ($doublon === 1) {
+                $multiplicateur = 1.1;
+            } elseif ($doublon === 2) {
+                $multiplicateur = 1.175;
+            } elseif ($doublon === 3) {
+                $multiplicateur = 1.2;
+            } elseif ($doublon === 4) {
+                $multiplicateur = 1.245;
+            }
+
+            // Calculate updated stats based on the character's level and doublon
+            $puissance = $characterData['puissance'] * pow((1 + $characterLevel / 100), 2) * $multiplicateur;
+            $defense = $characterData['defense'] * pow((1 + $characterLevel / 100), 2) * $multiplicateur;
+            $HP = $characterData['HP'] * pow((1 + $characterLevel / 100), 2) * $multiplicateur;
+
             $characterObjects[] = new Character(
                 $characterData['id_perso'],
                 $characterData['nom'],
-                $characterData['puissance'],
-                $characterData['defense'],
-                $characterData['HP'],
+                $puissance,
+                $defense,
+                $HP,
                 $characterData['type']
             );
         }
@@ -153,6 +172,8 @@ class API
 
         sendJSON($characterDetails);
     }
+
+
 
 
     private function getCharacters($id_perso)
