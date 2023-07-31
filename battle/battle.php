@@ -14,7 +14,7 @@ session_start();
         if (isset($_POST['selected_characters']) && !empty($_POST['selected_characters'])) {
             // Ajouter une ligne de débogage pour afficher les données reçues
             echo "<pre>";
-            var_dump($_POST['selected_characters']);
+            var_dump($_POST['selected_characters[1]']);
             echo "</pre>";
 
             // Obtenez les personnages sélectionnés et affichez-les sous forme de tableau
