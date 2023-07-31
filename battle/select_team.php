@@ -33,20 +33,18 @@ $user_id = $_SESSION['user_id'];
             if (empty($characters)) {
                 echo "Aucun personnage trouvé pour cet utilisateur.";
             } else {
-                // Affichez les personnages avec leurs statistiques
+                // Affichez les personnages avec leurs statistiques et permettez la sélection
                 foreach ($characters as $character) {
                     $character_id = $character['id'];
                     $character_name = $character['name'];
                     $character_hp = $character['hp'];
 
-                    // Affichage des statistiques du personnage
-                    echo "<p>$character_name - HP: $character_hp</p>";
-                    echo "<input type=\"checkbox\" name=\"selected_characters[]\" value=\"$character_id\"> Sélectionner<br>";
+                    // Affichage des statistiques du personnage avec une case à cocher
+                    echo "<label>";
+                    echo "<input type=\"checkbox\" name=\"selected_characters[]\" value='".htmlspecialchars(json_encode($character))."'>";
+                    echo "$character_name - HP: $character_hp";
+                    echo "</label><br>";
                 }
-
-                // Encodez les informations des personnages en JSON pour les passer à la page "battle.php"
-                $characters_json_encoded = json_encode($characters);
-                echo "<input type=\"hidden\" name=\"characters_json\" value='$characters_json_encoded'>";
 
                 // Inclure l'ID du niveau dans le formulaire
                 echo "<input type=\"hidden\" name=\"niveau_id\" value=\"$niveau_id\">";
