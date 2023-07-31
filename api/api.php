@@ -62,7 +62,12 @@ class API
                 $url = explode("/", filter_var($_GET['request'], FILTER_SANITIZE_URL));
                 switch ($url[0]) {
                     case "characters":
-                        $this->getAllCharacters();
+                        if (empty($url[1])) {
+                            $this->getAllCharacters();
+                        } else {
+                            $this->getCharacters($url[1]);
+                        }
+
                         break;
                     case "player_characters":
                         if (!empty($url[1])) {
@@ -149,7 +154,35 @@ class API
         sendJSON($characterDetails);
     }
 
-    private function getNiveaux() {
+
+    private function getCharacters($id_perso)
+    {
+        $query = "SELECT personnages.*
+                  FROM personnages
+                  WHERE id_perso = :id_perso";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id_perso', $id_perso, PDO::PARAM_INT);
+        $stmt->execute();
+        $characterData = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$characterData) {
+            return null;
+        }
+
+        $character = new Character(
+            $characterData['id_perso'],
+            $characterData['nom'],
+            $characterData['puissance'],
+            $characterData['defense'],
+            $characterData['HP'],
+            $characterData['type']
+        );
+        return sendJSON($character);
+    }
+
+    private function getNiveaux()
+    {
         $query = "SELECT * FROM niveau";
 
         $stmt = $this->db->prepare($query);

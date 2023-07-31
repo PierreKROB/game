@@ -21,8 +21,6 @@ session_start();
         $characters_json = file_get_contents($api_url);
         $characterDetails = json_decode($characters_json, true);
 
-        echo $characterDetails[1];
-
 
         echo "HP: $HP";
         foreach ($_POST['selected_characters'] as $selected_character_id) {
