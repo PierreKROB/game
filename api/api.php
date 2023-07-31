@@ -1,6 +1,6 @@
 <?php
 function getConnexion(){
-    return new PDO("mysql:host=localhost;dbname=fh2prog;charset=utf8","root","root");
+    return new PDO("mysql:host=localhost;dbname=krpi8598_diarabattle;charset=utf8","krpi8598_admin","Afrique2015!");
 }
 
 function sendJSON($infos){
