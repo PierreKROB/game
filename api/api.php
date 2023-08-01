@@ -256,7 +256,7 @@ class API
         $niveau['liste_boss'] = json_decode($niveau['liste_boss']);
     }
 
-    echo $niveaux;
+    sendJSON($niveaux);
 }
 
     private function getEnemies($Id)
