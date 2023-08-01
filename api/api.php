@@ -82,8 +82,12 @@ class API
                             throw new Exception("Player ID not provided.");
                         }
                         break;
-                    case "niveaux": // Ajout du nouveau cas pour les niveaux
-                        $this->getNiveaux();
+                    case "niveaux":
+                        if (empty($url[1])) {
+                            $this->getNiveaux();
+                        } else {
+                            $this->getNiveau($url[1]);
+                        } // Ajout du nouveau cas pour les niveaux
                         break;
                     default:
                         throw new Exception("Invalid request, check the URL.");
@@ -256,6 +260,54 @@ class API
 
         sendJSON($niveaux);
     }
+
+    private function getNiveau($Id)
+{
+    // Requête pour récupérer les informations sur le niveau avec l'ID spécifié
+    $query = "SELECT
+        n.id AS id,
+        n.categorie AS categorie,
+        n.difficulte AS difficulte,
+        JSON_ARRAYAGG(
+            JSON_OBJECT(
+                'id', b.id,
+                'nom', b.nom,
+                'hp', b.hp,
+                'defense', b.defense,
+                'attaque', b.attaque,
+                'attaque_speciale', b.attaque_speciale,
+                'dommage_reduit', b.dommage_reduit,
+                'type', b.type
+            )
+        ) AS liste_boss
+        FROM
+        niveau n
+        JOIN
+        (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4) numbers
+        ON
+        JSON_UNQUOTE(JSON_EXTRACT(n.liste_boss, CONCAT('$[', numbers.n, ']'))) IS NOT NULL
+        LEFT JOIN
+        boss b ON b.id = JSON_UNQUOTE(JSON_EXTRACT(n.liste_boss, CONCAT('$[', numbers.n, ']')))
+        WHERE n.id = :Id"; // Utilisation d'un paramètre nommé pour éviter les failles SQL
+
+    $stmt = $this->db->prepare($query);
+    $stmt->bindParam(':Id', $Id, PDO::PARAM_INT); // Lier l'ID en tant que paramètre nommé
+    $stmt->execute();
+    $niveau = $stmt->fetch(PDO::FETCH_ASSOC); // Utilisation de fetch() pour récupérer un seul niveau
+
+    if (!$niveau) {
+        // Si aucun niveau n'est trouvé avec l'ID spécifié, vous pouvez gérer une erreur ici
+        throw new Exception("Niveau non trouvé avec l'ID : $Id");
+    }
+
+    // Convertir les valeurs de la colonne 'liste_boss' en JSON décodé
+    $niveau['liste_boss'] = json_decode($niveau['liste_boss']);
+
+    // Envoyer les informations du niveau au format JSON
+    sendJSON($niveau);
+}
+
+
 
     private function getEnemies($Id)
     {
