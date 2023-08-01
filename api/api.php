@@ -220,26 +220,37 @@ class API
 
     private function getNiveaux()
     {
-        $query = "SELECT * FROM niveau";
+        $query = "SELECT niveau.id, niveau.categorie, niveau.difficulte,
+                  GROUP_CONCAT(JSON_OBJECT('nom', boss.nom, 'hp', boss.hp, 'defense', boss.defense, 
+                      'attaque', boss.attaque, 'attaque_speciale', boss.attaque_speciale, 
+                      'dommage_reduit', boss.dommage_reduit, 'type', boss.type)
+                      ) AS liste_boss
+                  FROM niveau
+                  INNER JOIN boss ON FIND_IN_SET(boss.id, niveau.liste_boss)
+                  GROUP BY niveau.id";
 
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $niveaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        // Convert the JSON strings in liste_boss to arrays
+        foreach ($niveaux as &$niveau) {
+            $niveau['liste_boss'] = json_decode('[ ' . $niveau['liste_boss'] . ' ]', true);
+        }
+
         sendJSON($niveaux);
     }
 
-    private function getEnemiesByLevel($Id)
+    private function getEnemies($Id)
     {
         $query = "SELECT boss.*
                   FROM boss
-                  INNER JOIN niveau ON niveau.liste_boss LIKE CONCAT('%', CAST(boss.id AS CHAR), '%')
-                  WHERE niveau.id = :Id";
+                  WHERE boss.id = :Id";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':Id', $Id, PDO::PARAM_INT);
         $stmt->execute();
-        $enemies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $enemies = $stmt->fetch(PDO::FETCH_ASSOC);
 
         sendJSON($enemies);
     }
