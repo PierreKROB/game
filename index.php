@@ -27,16 +27,16 @@ if (!isset($_SESSION['username'])){
                 <div class="square" style="--i:4;"></div>
                 <div class="container">
                     <div class="form">
-                        <h2>Login Form</h2>
+                        <h2>Connexion</h2>
                         <form method="post" action="app/http/auth.php">
                             <div class="inputBox">
-                                <input type="text" placeholder="Username" name="username">
+                                <input type="text" placeholder="Pseudo" name="username">
                             </div>
                             <div class="inputBox">
-                                <input type="password" placeholder="Password" name="password">
+                                <input type="password" placeholder="Mot de passe" name="password">
                             </div>
                             <div class="inputBox">
-                                <input type="submit" value="Login">
+                                <input type="submit" value="Connexion">
                             </div>
                             <p class="forget">Mot de passe oublié ? <a href="#">Clique ici</a></p>
                             <p class="forget">Pas de compte ? <a href="signup.php">Inscription</a></p>

@@ -20,7 +20,6 @@ if (isset($_SESSION['username'])) {
             <h1>Diara Battle</h1>
             <p>Bienvenue <?php echo $_SESSION["username"] ?></p>
             <div id="character-list">
-                <!-- Exemple de cartes de personnages, à remplir dynamiquement avec JavaScript -->
             </div>
             <button id="summon-button" class="button">Faire une invocation</button>
             <button id="battle-button" class="button"><a href="battle/select_lvl.php">Combattre</a></button>
