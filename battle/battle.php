@@ -6,9 +6,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $selected_characters = $_POST['selected_characters'];
         $niveau_id = $_POST['niveau_id'];
 
-        // Calculer les HP totaux de l'équipe en utilisant la formule donnée
-        $total_hp = 0;
-
         foreach ($selected_characters as $selected_character_json) {
             $selected_character = json_decode($selected_character_json, true);
 
@@ -26,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 
 <head>
-    <title>Équipe de combat</title>
+    <title>Combat !</title>
 </head>
 
 <body>
@@ -34,9 +31,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php if (isset($base_hp)) : ?>
         <p>Montant total des points de vie de l'équipe : <?php echo $base_hp; ?></p>
     <?php endif; ?>
-    <!-- Afficher d'autres informations sur l'équipe de combat si nécessaire -->
+
 </body>
 
-
+<script>
+    // Passer l'ID du niveau à battle.js en tant que variable JavaScript
+    var niveauId = <?php echo $niveau_id; ?>;
+</script>
 <script src="battle.js"></script>
 </html>
