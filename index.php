@@ -11,55 +11,40 @@ if (!isset($_SESSION['username'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 
-<body class="body">
-
-    <div>
-        <div>
-            <form method="post" action="app/http/auth.php">
-
-                <!-- <div>
-                    <img src="img/logo.png" class="w-full h-40" alt="Logo">
-                </div> -->
-
-                <div>
-                    <div>
-                        <label>
-                            Pseudo
-                        </label>
-                        <input type="text" name="username">
+<body>
+        <section>
+            <div class="color"></div>
+            <div class="color"></div>
+            <div class="color"></div>
+            <div class="box">
+                <div class="square" style="--i:0;"></div>
+                <div class="square" style="--i:1;"></div>
+                <div class="square" style="--i:2;"></div>
+                <div class="square" style="--i:3;"></div>
+                <div class="square" style="--i:4;"></div>
+                <div class="container">
+                    <div class="form">
+                        <h2>Login Form</h2>
+                        <form method="post" action="app/http/auth.php">
+                            <div class="inputBox">
+                                <input type="text" placeholder="Username" name="username">
+                            </div>
+                            <div class="inputBox">
+                                <input type="password" placeholder="Password" name="password">
+                            </div>
+                            <div class="inputBox">
+                                <input type="submit" value="Login">
+                            </div>
+                            <p class="forget">Mot de passe oublié ? <a href="#">Clique ici</a></p>
+                            <p class="forget">Pas de compte ? <a href="signup.php">Inscription</a></p>
+                        </form>
                     </div>
-
-                    <div>
-                        <label>
-                            Mot de passe
-                        </label>
-                        <input type="password" name="password">
-                    </div>
-
-                    <button type="submit">Connexion</button>
-
-                    <?php if (isset($_GET['error'])) { ?>
-                        <div class="bg-yellow-200 text-yellow-800 p-3 rounded mb-4">
-                            <?php echo htmlspecialchars($_GET['error']); ?>
-                        </div>
-                    <?php } ?>
-
-                    <?php if (isset($_GET['success'])) { ?>
-                        <div class="bg-green-200 text-green-800 p-3 rounded">
-                            <?php echo htmlspecialchars($_GET['success']); ?>
-                        </div>
-                    <?php } ?>
-
                 </div>
-            </form>
-            <!-- Lien vers la page d'inscription "signup.php" -->
-            <div>
-                <a href="signup.php">Inscription</a>
             </div>
-        </div>
-    </div>
+        </section>
 </body>
 
 </html>
