@@ -250,6 +250,9 @@ class API
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $niveaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($niveaux as &$niveau) {
+            $niveau['liste_boss'] = json_decode($niveau['liste_boss']);
+        }
 
         sendJSON($niveaux);
     }
