@@ -256,8 +256,11 @@ class API
         $niveau['liste_boss'] = json_decode($niveau['liste_boss']);
     }
 
-    sendJSON($niveaux);
+    // Au lieu d'appeler sendJSON directement avec le tableau $niveaux, nous allons le convertir en JSON avant l'envoi
+    $jsonResponse = json_encode($niveaux, JSON_UNESCAPED_UNICODE);
+    sendJSON($jsonResponse);
 }
+
 
     private function getEnemies($Id)
     {
