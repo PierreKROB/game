@@ -1,5 +1,5 @@
 // Classe HP_TOTAL
-class HP_TOTALplayer {
+export class HP_TOTALplayer {
     constructor(HP_MAX) {
       this.HP_MAX = HP_MAX;
       this.HP_NOW = HP_MAX;
@@ -25,7 +25,7 @@ class HP_TOTALplayer {
   }
 
 // Classe pour représenter les ennemis
-class Ennemi {
+export class Ennemi {
   constructor(nom, hp, defense, attaque, attaque_speciale, dommage_reduit, type) {
     this.nom = nom;
     this.hp = hp;
@@ -58,3 +58,5 @@ class Ennemi {
   }
 
 }
+
+
