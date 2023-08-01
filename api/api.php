@@ -221,7 +221,7 @@ class API
     private function getNiveaux()
     {
         $query = "SELECT niveau.id, niveau.categorie, niveau.difficulte,
-                  GROUP_CONCAT(JSON_OBJECT('nom', boss.nom, 'hp', boss.hp, 'defense', boss.defense, 
+                  JSON_ARRAYAGG(JSON_OBJECT('nom', boss.nom, 'hp', boss.hp, 'defense', boss.defense, 
                       'attaque', boss.attaque, 'attaque_speciale', boss.attaque_speciale, 
                       'dommage_reduit', boss.dommage_reduit, 'type', boss.type)
                       ) AS liste_boss
@@ -232,11 +232,6 @@ class API
         $stmt = $this->db->prepare($query);
         $stmt->execute();
         $niveaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Convert the JSON strings in liste_boss to arrays
-        foreach ($niveaux as &$niveau) {
-            $niveau['liste_boss'] = json_decode('[ ' . $niveau['liste_boss'] . ' ]', true);
-        }
 
         sendJSON($niveaux);
     }
