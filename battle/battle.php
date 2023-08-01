@@ -38,5 +38,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Passer l'ID du niveau à battle.js en tant que variable JavaScript
     var niveauId = <?php echo $niveau_id; ?>;
 </script>
-<script src="battle.js"></script>
+<script type="module" src="battle.js"></script>
 </html>
