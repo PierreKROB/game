@@ -228,6 +228,21 @@ class API
 
         sendJSON($niveaux);
     }
+
+    private function getEnemiesByLevel($Id)
+    {
+        $query = "SELECT boss.*
+                  FROM boss
+                  INNER JOIN niveau ON niveau.liste_boss LIKE CONCAT('%', CAST(boss.id AS CHAR), '%')
+                  WHERE niveau.id = :Id";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':Id', $Id, PDO::PARAM_INT);
+        $stmt->execute();
+        $enemies = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        sendJSON($enemies);
+    }
 }
 
 $api = new API();
