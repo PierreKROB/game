@@ -1,5 +1,5 @@
 // Importer les classes à partir des fichiers séparés
-import HP_TOTALplayer from './class/HP_TOTAL.js';
+import HP_TOTALplayer from './class/HP_TOTALplayer.js';
 import Ennemi from './class/Ennemi.js';
 
 async function getEnnemisDuNiveau(niveauId) {
