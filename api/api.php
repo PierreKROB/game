@@ -219,40 +219,45 @@ class API
 
 
     private function getNiveaux()
-    {
-        $query = "SELECT
+{
+    $query = "SELECT
         n.id AS id,
         n.categorie AS categorie,
         n.difficulte AS difficulte,
         JSON_ARRAYAGG(
-          JSON_OBJECT(
-            'id', b.id,
-            'nom', b.nom,
-            'hp', b.hp,
-            'defense', b.defense,
-            'attaque', b.attaque,
-            'attaque_speciale', b.attaque_speciale,
-            'dommage_reduit', b.dommage_reduit,
-            'type', b.type
-          )
+            JSON_OBJECT(
+                'id', b.id,
+                'nom', b.nom,
+                'hp', b.hp,
+                'defense', b.defense,
+                'attaque', b.attaque,
+                'attaque_speciale', b.attaque_speciale,
+                'dommage_reduit', b.dommage_reduit,
+                'type', b.type
+            )
         ) AS liste_boss
-      FROM
+        FROM
         niveau n
-      JOIN
+        JOIN
         (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4) numbers
-      ON
+        ON
         JSON_UNQUOTE(JSON_EXTRACT(n.liste_boss, CONCAT('$[', numbers.n, ']'))) IS NOT NULL
-      LEFT JOIN
+        LEFT JOIN
         boss b ON b.id = JSON_UNQUOTE(JSON_EXTRACT(n.liste_boss, CONCAT('$[', numbers.n, ']')))
-      GROUP BY
+        GROUP BY
         n.id";
 
-        $stmt = $this->db->prepare($query);
-        $stmt->execute();
-        $niveaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $this->db->prepare($query);
+    $stmt->execute();
+    $niveaux = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        sendJSON($niveaux);
+    // Convertir les valeurs de la colonne 'liste_boss' en JSON décodé
+    foreach ($niveaux as &$niveau) {
+        $niveau['liste_boss'] = json_decode($niveau['liste_boss']);
     }
+
+    sendJSON($niveaux);
+}
 
     private function getEnemies($Id)
     {
