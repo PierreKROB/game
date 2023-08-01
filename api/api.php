@@ -220,14 +220,32 @@ class API
 
     private function getNiveaux()
     {
-        $query = "SELECT niveau.id, niveau.categorie, niveau.difficulte,
-                  JSON_ARRAYAGG(JSON_OBJECT('nom', boss.nom, 'hp', boss.hp, 'defense', boss.defense, 
-                      'attaque', boss.attaque, 'attaque_speciale', boss.attaque_speciale, 
-                      'dommage_reduit', boss.dommage_reduit, 'type', boss.type)
-                      ) AS liste_boss
-                  FROM niveau
-                  INNER JOIN boss ON FIND_IN_SET(boss.id, niveau.liste_boss)
-                  GROUP BY niveau.id";
+        $query = "SELECT
+        n.id AS id,
+        n.categorie AS categorie,
+        n.difficulte AS difficulte,
+        JSON_ARRAYAGG(
+          JSON_OBJECT(
+            'id', b.id,
+            'nom', b.nom,
+            'hp', b.hp,
+            'defense', b.defense,
+            'attaque', b.attaque,
+            'attaque_speciale', b.attaque_speciale,
+            'dommage_reduit', b.dommage_reduit,
+            'type', b.type
+          )
+        ) AS liste_boss
+      FROM
+        niveau n
+      JOIN
+        (SELECT 0 AS n UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4) numbers
+      ON
+        JSON_UNQUOTE(JSON_EXTRACT(n.liste_boss, CONCAT('$[', numbers.n, ']'))) IS NOT NULL
+      LEFT JOIN
+        boss b ON b.id = JSON_UNQUOTE(JSON_EXTRACT(n.liste_boss, CONCAT('$[', numbers.n, ']')))
+      GROUP BY
+        n.id";
 
         $stmt = $this->db->prepare($query);
         $stmt->execute();
