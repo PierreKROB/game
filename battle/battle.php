@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+$base_hp = 0; // Initialise la variable $base_hp
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['selected_characters']) && isset($_POST['niveau_id'])) {
         $selected_characters = $_POST['selected_characters'];
@@ -14,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     } else {
         echo "Erreur : les personnages sélectionnés ou l'ID du niveau sont manquants.";
-        exit();
+        exit(); // Termine l'exécution du script
     }
 }
 ?>
@@ -32,11 +34,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p>Montant total des points de vie de l'équipe : <?php echo $base_hp; ?></p>
     <?php endif; ?>
 
+    <h2>Ennemis du niveau</h2>
+    <ul id="ennemis-list">
+        <!-- Les ennemis seront ajoutés ici dynamiquement -->
+    </ul>
 </body>
-
 <script>
-    // Passer l'ID du niveau à battle.js en tant que variable JavaScript
     var niveauId = <?php echo $niveau_id; ?>;
 </script>
-<script type="module" src="battle.js"></script>
+
+<script src="battle.js"></script>
 </html>
