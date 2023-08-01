@@ -19,7 +19,7 @@ if (isset($_SESSION['username'])) {
         <div id="game-container">
             <h1>Diara Battle</h1>
             <p>Welcome <?php echo $_SESSION["username"] ?></p>
-            <?php echo $host; ?>
+            <?php echo "l'host est "+ $host; ?>
             <div id="character-list">
                 <!-- Exemple de cartes de personnages, à remplir dynamiquement avec JavaScript -->
             </div>
