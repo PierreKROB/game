@@ -1,8 +1,14 @@
 <?php
 function getConnexion()
 {
-    return new PDO("mysql:host=localhost;dbname=krpi8598_diarabattle;charset=utf8", "krpi8598_admin", "Afrique2015!");
+    $host = getenv("DB_HOST");
+    $dbname = getenv("DB_NAME");
+    $username = getenv("DB_USER");
+    $password = getenv("DB_PASSWORD");
+
+    return new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
 }
+
 
 function sendJSON($infos)
 {
