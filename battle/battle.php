@@ -37,4 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- Afficher d'autres informations sur l'équipe de combat si nécessaire -->
 </body>
 
+
+<script src="battle.js"></script>
 </html>
