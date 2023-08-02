@@ -61,7 +61,6 @@ class HP_TOTALplayer {
   }
 }
 
-
 // Définir la fonction pour récupérer les ennemis du niveau
 function getEnnemisDuNiveau(niveauId) {
   try {
@@ -88,24 +87,49 @@ function getEnnemisDuNiveau(niveauId) {
   }
 }
 
-// Fonction pour afficher les ennemis sur la page
-function afficherEnnemis(ennemis) {
+// Déclarez la variable ennemisInstances en tant que variable globale en dehors des fonctions
+let ennemisInstances = [];
+
+function afficherEnnemis(ennemisData) {
   const ennemisList = document.getElementById("ennemis-list");
+  ennemisList.innerHTML = ""; // Effacer le contenu précédent de la liste
 
-  // Effacer le contenu précédent de la liste
-  ennemisList.innerHTML = "";
+  ennemisData.forEach((ennemiData, index) => {
+    const ennemi = new Ennemi(
+      ennemiData.nom,
+      ennemiData.hp,
+      ennemiData.defense,
+      ennemiData.attaque,
+      ennemiData.attaque_speciale,
+      ennemiData.dommage_reduit,
+      ennemiData.type
+    );
 
-  // Afficher les ennemis récupérés
-  ennemis.forEach(ennemi => {
+    ennemisInstances.push(ennemi);
     const ennemiItem = document.createElement("li");
     ennemiItem.textContent = `Nom: ${ennemi.nom}, Type: ${ennemi.type}, Points de vie: ${ennemi.hp}`;
+    ennemiItem.id = `ennemi-item-${index}`; // Ajouter un id unique pour chaque ennemi
     ennemisList.appendChild(ennemiItem);
   });
 }
 
 // Utilisation de la fonction getEnnemisDuNiveau
 getEnnemisDuNiveau(niveauId)
-  .then(ennemis => {
-    // Une fois les ennemis récupérés, on les affiche dans la page
-    afficherEnnemis(ennemis);
+  .then(ennemisData => {
+    // Une fois les ennemis récupérés, on les affiche dans la page et on crée les instances d'Ennemi
+    afficherEnnemis(ennemisData);
   });
+
+// Utilisez ce code JavaScript pour gérer le bouton d'attaque
+document.getElementById("btn-attaque").addEventListener("click", () => {
+  // Supposez que l'indice de l'ennemi ciblé soit 0 (pour le premier ennemi)
+  const indexEnnemiCible = 0;
+  const ennemiCible = ennemisInstances[indexEnnemiCible];
+
+  // Effectuez l'attaque en retirant 100 HP à l'ennemi ciblé
+  ennemiCible.DamageEnnemi(100);
+
+  // Mettez à jour l'affichage des points de vie de l'ennemi ciblé
+  const ennemiItem = document.getElementById(`ennemi-item-${indexEnnemiCible}`);
+  ennemiItem.textContent = `Nom: ${ennemiCible.nom}, Type: ${ennemiCible.type}, Points de vie: ${ennemiCible.hp}`;
+});

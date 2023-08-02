@@ -38,10 +38,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <ul id="ennemis-list">
         <!-- Les ennemis seront ajoutés ici dynamiquement -->
     </ul>
+
+    <!-- Ajoutez un bouton d'attaque dans votre page HTML -->
+    <button id="btn-attaque">Attaque</button>
+
+
+
 </body>
 <script>
     var niveauId = <?php echo $niveau_id; ?>;
 </script>
 
 <script src="battle.js"></script>
+
 </html>
