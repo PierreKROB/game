@@ -123,7 +123,7 @@ getEnnemisDuNiveau(niveauId)
 
 
   document.addEventListener("DOMContentLoaded", function () {
-    // Vous pouvez maintenant utiliser la variable joueursData dans votre script
-    console.log(joueursData); // Cela affichera les données des joueurs dans la console du navigateur
-  });
-  
+      // Vous pouvez maintenant utiliser les données des joueurs dans votre script
+      console.log(joueursData); // Cela affichera les données des joueurs dans la console du navigateur
+    }
+  );
