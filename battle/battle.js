@@ -120,16 +120,10 @@ getEnnemisDuNiveau(niveauId)
     afficherEnnemis(ennemisData);
   });
 
-// Utilisez ce code JavaScript pour gérer le bouton d'attaque
-document.getElementById("btn-attaque").addEventListener("click", () => {
-  // Supposez que l'indice de l'ennemi ciblé soit 0 (pour le premier ennemi)
-  const indexEnnemiCible = 0;
-  const ennemiCible = ennemisInstances[indexEnnemiCible];
 
-  // Effectuez l'attaque en retirant 100 HP à l'ennemi ciblé
-  ennemiCible.DamageEnnemi(100);
 
-  // Mettez à jour l'affichage des points de vie de l'ennemi ciblé
-  const ennemiItem = document.getElementById(`ennemi-item-${indexEnnemiCible}`);
-  ennemiItem.textContent = `Nom: ${ennemiCible.nom}, Type: ${ennemiCible.type}, Points de vie: ${ennemiCible.hp}`;
-});
+  document.addEventListener("DOMContentLoaded", function () {
+    // Vous pouvez maintenant utiliser la variable joueursData dans votre script
+    console.log(joueursData); // Cela affichera les données des joueurs dans la console du navigateur
+  });
+  
