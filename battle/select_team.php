@@ -43,7 +43,7 @@ $user_id = $_SESSION['user_id'];
 
                     // Affichage des statistiques du personnage avec une case à cocher
                     echo "<label>";
-                    echo "<input type=\"checkbox\" name=\"selected_characters[]\" value='".htmlspecialchars(json_encode($character))."'>";
+                    echo "<input type=\"checkbox\" name=\"selected_characters[]\" value=\"$character_id\">";
                     echo "$character_name - HP: $character_hp";
                     echo "</label><br>";
                 }
