@@ -14,7 +14,6 @@ $user_id = $_SESSION['user_id'];
         <?php
             // Vérifiez si l'utilisateur est connecté et récupérez son user_id
             
-
             // Récupérez l'ID du niveau depuis l'URL
             if (isset($_GET['niveau_id'])) {
                 $niveau_id = $_GET['niveau_id'];
@@ -35,6 +34,14 @@ $user_id = $_SESSION['user_id'];
                 echo "Aucun personnage trouvé pour cet utilisateur.";
             } else {
                 // Affichez les personnages avec leurs statistiques et permettez la sélection
+                echo "<script>";
+                echo "function collectSelectedCharacters() {";
+                echo "const checkboxes = document.querySelectorAll('input[name=\"selected_characters[]\"]:checked');";
+                echo "const selectedCharacters = Array.from(checkboxes).map(checkbox => checkbox.value);";
+                echo "document.getElementById('selected_characters_json').value = JSON.stringify(selectedCharacters);";
+                echo "}";
+                echo "</script>";
+
                 foreach ($characters as $character) {
                     $character_id = $character['id'];
                     $character_name = $character['name'];
@@ -44,13 +51,16 @@ $user_id = $_SESSION['user_id'];
 
                     // Affichage des statistiques du personnage avec une case à cocher
                     echo "<label>";
-                    echo "<input type=\"checkbox\" name=\"selected_characters[]\" value=\"$character_id\">";
+                    echo "<input type=\"checkbox\" name=\"selected_characters[]\" value=\"$character_id\" onclick=\"collectSelectedCharacters()\">";
                     echo "$character_name - HP: $character_hp";
                     echo "</label><br>";
                 }
 
                 // Inclure l'ID du niveau dans le formulaire
                 echo "<input type=\"hidden\" name=\"niveau_id\" value=\"$niveau_id\">";
+
+                // Champ caché pour stocker les personnages sélectionnés sous forme de JSON
+                echo "<input type=\"hidden\" id=\"selected_characters_json\" name=\"selected_characters_json\">";
 
                 echo "<input type=\"submit\" value=\"Valider\">";
             }
