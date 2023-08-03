@@ -4,8 +4,8 @@ session_start();
 $base_hp = 0; // Initialise la variable $base_hp
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['selected_characters_json']) && isset($_POST['niveau_id'])) {
-        $selected_characters = $_POST['selected_characters_json'];
+    if (isset($_POST['selected_characters']) && isset($_POST['niveau_id'])) {
+        $selected_characters = $_POST['selected_characters'];
         $niveau_id = $_POST['niveau_id'];
         var_dump($selected_characters);
     } else {
