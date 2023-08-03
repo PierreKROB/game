@@ -37,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php
     // Convertir le tableau des joueurs en JSON
     $joueurs_json = json_encode($selected_characters);
+    var_dump($joueurs_json);
     ?>
     <script>
         var joueursData = <?php echo $joueurs_json ?>;
