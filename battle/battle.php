@@ -7,7 +7,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['selected_characters']) && isset($_POST['niveau_id'])) {
         $selected_characters = $_POST['selected_characters'];
         $niveau_id = $_POST['niveau_id'];
-        var_dump($selected_characters);
     } else {
         echo "Erreur : les personnages sélectionnés ou l'ID du niveau sont manquants.";
         exit();
