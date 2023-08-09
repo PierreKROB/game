@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     var_dump($joueurs_json);
     ?>
     <script>
-        var joueursData = <?php echo $joueurs_json ?>;
+        var joueursData = <?php echo $selected_characters ?>;
         var niveauId = <?php echo $niveau_id; ?>;
     </script>
 
