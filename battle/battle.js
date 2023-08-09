@@ -78,7 +78,7 @@ class Personnage {
 
 class CombatListe {
   constructor(personnages) {
-    this.liste = [...personnages]; // Créez une copie du tableau de personnages
+    this.liste = personnages;
     this.shuffleListe(); // Mélange initial de la liste
   }
 
@@ -201,6 +201,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const listeperso = new CombatListe(personnages)
   console.log(listeperso.liste)
- listeperso.nextRotation()
+  listeperso.nextRotation()
   console.log(listeperso.liste)
 });
