@@ -90,16 +90,9 @@ class CombatListe {
   }
 
   nextRotation() {
-    const rotation = [
-      this.liste.shift(), // Retirez le premier personnage
-      this.liste.shift(), // Retirez le deuxième personnage
-      this.liste.shift()  // Retirez le troisième personnage
-    ];
+    const rotation = this.liste.splice(0, 3); // Retirez les trois premiers personnages
+    this.liste.push(rotation[0], rotation[1], rotation[2]); // Ajoutez-les à la fin de la liste
 
-    // Ajoutez les personnages de la rotation actuelle à la fin
-    this.liste.push(...rotation);
-
-    return rotation;
   }
 }
 
@@ -208,6 +201,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const listeperso = new CombatListe(personnages)
   console.log(listeperso.liste)
-  const feur = listeperso.nextRotation()
-  console.log(feur)
+ listeperso.nextRotation()
+  console.log(listeperso.liste)
 });
