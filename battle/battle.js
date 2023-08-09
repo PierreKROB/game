@@ -124,7 +124,7 @@ getEnnemisDuNiveau(niveauId)
 
 document.addEventListener("DOMContentLoaded", function () {
   // Vous pouvez maintenant utiliser les données des joueurs dans votre script
-  console.log(joueursData); // Cela affichera les données des joueurs dans la console du navigateur
+ // Cela affichera les données des joueurs dans la console du navigateur
 
   var totalHP = 0;
   for (var i = 0; i < joueursData.length; i++) {
