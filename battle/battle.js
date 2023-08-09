@@ -208,4 +208,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const listeperso = new CombatListe(personnages)
   console.log(listeperso.liste)
+  listeperso.nextRotation()
+  console.log(listeperso.liste)
 });
