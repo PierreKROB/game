@@ -49,7 +49,6 @@ $user_id = $_SESSION['user_id'];
                 echo "<input type=\"checkbox\" name=\"selected_characters[]\" value='$character_data_json'>";
                 echo "$character_name - HP: $character_hp";
                 echo "</label><br>";
-                var_dump($character);
             }
 
             // Inclure l'ID du niveau dans le formulaire
