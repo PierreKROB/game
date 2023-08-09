@@ -11,6 +11,7 @@ class Ennemi {
     this.attaque_speciale = attaque_speciale;
     this.dommage_reduit = dommage_reduit;
     this.type = type;
+    this.hpMax = hp;
   }
 
   // Méthode pour soigner l'ennemi
@@ -74,6 +75,34 @@ class Personnage {
     this.doublon = doublon;
   }
 }
+
+class CombatListe {
+  constructor(personnages) {
+    this.liste = [...personnages]; // Créez une copie du tableau de personnages
+    this.shuffleListe(); // Mélange initial de la liste
+  }
+
+  shuffleListe() {
+    for (let i = this.liste.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [this.liste[i], this.liste[j]] = [this.liste[j], this.liste[i]];
+    }
+  }
+
+  nextRotation() {
+    const rotation = [
+      this.liste.shift(), // Retirez le premier personnage
+      this.liste.shift(), // Retirez le deuxième personnage
+      this.liste.shift()  // Retirez le troisième personnage
+    ];
+
+    // Ajoutez les personnages de la rotation actuelle à la fin
+    this.liste.push(...rotation);
+
+    return rotation;
+  }
+}
+
 
 // Définir la fonction pour récupérer les ennemis du niveau
 function getEnnemisDuNiveau(niveauId) {
@@ -176,6 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     personnages.push(personnage);
   }
+
+  const listeperso = new CombatListe(personnages)
+  console.log(listeperso.liste)
 });
-
-
