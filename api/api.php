@@ -20,8 +20,8 @@ class Character
     private $defense;
     private $HP;
     private $type;
-    private $niveau; // New property for character's level
-    private $doublon; // New property for character's doublon
+    private $niveau; 
+    private $doublon;
 
     public function __construct($id_perso, $nom, $puissance, $defense, $HP, $type, $niveau, $doublon)
     {

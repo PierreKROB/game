@@ -61,6 +61,20 @@ class HP_TOTALplayer {
   }
 }
 
+// Classe JavaScript pour les personnages
+class Personnage {
+  constructor(id_perso, nom, puissance, defense, HP, type, niveau, doublon) {
+    this.id_perso = id_perso;
+    this.nom = nom;
+    this.puissance = puissance;
+    this.defense = defense;
+    this.HP = HP;
+    this.type = type;
+    this.niveau = niveau;
+    this.doublon = doublon;
+  }
+}
+
 // Définir la fonction pour récupérer les ennemis du niveau
 function getEnnemisDuNiveau(niveauId) {
   try {
@@ -122,34 +136,46 @@ getEnnemisDuNiveau(niveauId)
 
 
 
-  document.addEventListener("DOMContentLoaded", function () {
-    console.log(joueursData);
-  
-    // Convertir les chaînes JSON en objets
-    var joueursObjets = joueursData.map(function (joueurJSON) {
-      return JSON.parse(joueurJSON);
-    });
-  
-    // Calculer la somme totale des points de vie
-    var totalHP = 0;
-    for (var i = 0; i < joueursObjets.length; i++) {
-      var joueur = joueursObjets[i];
-      var hp = parseFloat(joueur.hp); // Convertir en nombre
-      if (!isNaN(hp)) {
-        totalHP += hp;
-      }
-    }
-  
-    // Instancier la classe HP_TOTALplayer avec HP_MAX initial
-    var hpTotalPlayer = new HP_TOTALplayer(HP_MAX_INITIAL); // Remplacez HP_MAX_INITIAL par la valeur correcte
-  
-    // Utiliser la méthode AddTotalHP pour ajouter la somme totale des HP
-    hpTotalPlayer.AddTotalHP(totalHP);
-  
-    // Maintenant hpTotalPlayer.HP_NOW contient les HP modifiés
-    console.log("HP modifiés : " + hpTotalPlayer.HP_NOW);
-  
-    // Envoyez hpTotalPlayer.HP_NOW à votre autre fichier PHP si nécessaire
-    // ...
+document.addEventListener("DOMContentLoaded", function () {
+  // Convertir les chaînes JSON en objets
+  var joueursObjets = joueursData.map(function (joueurJSON) {
+    return JSON.parse(joueurJSON);
   });
-  
+
+  // Calculer la somme totale des points de vie
+  var totalHP = 0;
+  for (var i = 0; i < joueursObjets.length; i++) {
+    var joueur = joueursObjets[i];
+    var hp = joueur.hp; // Convertir en nombre
+    if (!isNaN(hp)) {
+      totalHP += hp;
+    }
+  }
+
+  // Instancier la classe HP_TOTALplayer avec HP_MAX initial
+  var hpTotalPlayer = new HP_TOTALplayer(totalHP); // Remplacez HP_MAX_INITIAL par la valeur correcte
+
+  var hpDisplay = document.getElementById("hpDisplay"); // Remplacez par l'ID correct
+  hpDisplay.innerHTML = hpTotalPlayer.HP_NOW;
+
+  // Créer un tableau pour stocker les objets personnages
+  var personnages = [];
+
+  // Instancier des objets personnages à partir des données
+  for (var i = 0; i < joueursObjets.length; i++) {
+    var joueur = joueursObjets[i];
+    var personnage = new Personnage(
+      joueur.id,
+      joueur.name,
+      joueur.power,
+      joueur.defense,
+      joueur.hp,
+      joueur.type,
+      joueur.level,
+      joueur.doublon
+    );
+    personnages.push(personnage);
+  }
+});
+
+

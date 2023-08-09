@@ -24,7 +24,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h1>Équipe de combat</h1>
     <!-- Affichez le total des HP du joueur -->
-    <p>Montant total des points de vie de l'équipe : <span id="montant-total-hp"></span></p>
+    <!-- Créez un élément HTML pour afficher les HP -->
+    <p>HP du joueur : <span id="hpDisplay"></span></p>
+
 
 
     <h2>Ennemis du niveau</h2>
