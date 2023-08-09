@@ -124,13 +124,20 @@ getEnnemisDuNiveau(niveauId)
 
 document.addEventListener("DOMContentLoaded", function () {
   // Vous pouvez maintenant utiliser les données des joueurs dans votre script
- // Cela affichera les données des joueurs dans la console du navigateur
-  console.log(joueursData)
+  // Cela affichera les données des joueurs dans la console du navigateur
+  // Convertir les chaînes JSON en objets
+  var joueursObjets = joueursData.map(function (joueurJSON) {
+    return JSON.parse(joueurJSON);
+  });
+
+  // Calculer la somme totale des points de vie
   var totalHP = 0;
-  for (var i = 0; i < joueursData.length; i++) {
-    var joueur = joueursData[i];
-    var hp = joueur.hp; // Assurez-vous que "hp" correspond à la propriété correcte dans vos données
-    totalHP += hp;
+  for (var i = 0; i < joueursObjets.length; i++) {
+    var joueur = joueursObjets[i];
+    var hp = joueur.hp; // Convertir en nombre
+    if (!isNaN(hp)) {
+      totalHP += hp;
+    }
   }
 
   // Afficher la somme totale des points de vie dans la console
