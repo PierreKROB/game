@@ -92,7 +92,7 @@ class CombatListe {
   nextRotation() {
     const rotation = this.liste.splice(0, 3); // Retirez les trois premiers personnages
     this.liste = this.liste.concat(rotation); // Ajoutez-les à la fin de la liste
-}
+  }
 
 }
 
@@ -201,6 +201,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const listeperso = new CombatListe(personnages)
   console.log(listeperso.liste)
-  // listeperso.nextRotation()
-  console.log(listeperso.liste)
+  const listepersorota = listeperso.nextRotation()
+  console.log(listepersorota.liste)
 });
