@@ -91,9 +91,9 @@ class CombatListe {
 
   nextRotation() {
     const rotation = this.liste.splice(0, 3); // Retirez les trois premiers personnages
-    this.liste.push(rotation[0], rotation[1], rotation[2]); // Ajoutez-les à la fin de la liste
+    this.liste = this.liste.concat(rotation); // Ajoutez-les à la fin de la liste
+}
 
-  }
 }
 
 
