@@ -28,8 +28,6 @@ $user_id = $_SESSION['user_id'];
             $api_url = "https://eligoal.com/game/api/player_characters/$user_id";
             $characters_json = file_get_contents($api_url);
             $characters = json_decode($characters_json, true);
-            var_dump($characters);
-
             // Vérifiez si des personnages ont été récupérés
             if (empty($characters)) {
                 echo "Aucun personnage trouvé pour cet utilisateur.";
@@ -47,6 +45,7 @@ $user_id = $_SESSION['user_id'];
                     echo "<input type=\"checkbox\" name=\"selected_characters[]\" 'value='".htmlspecialchars(json_encode($character))."'>";
                     echo "$character_name - HP: $character_hp";
                     echo "</label><br>";
+                    var_dump($character);
                 }
 
                 // Inclure l'ID du niveau dans le formulaire
