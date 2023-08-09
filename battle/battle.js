@@ -122,25 +122,34 @@ getEnnemisDuNiveau(niveauId)
 
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Vous pouvez maintenant utiliser les données des joueurs dans votre script
-  // Cela affichera les données des joueurs dans la console du navigateur
-  // Convertir les chaînes JSON en objets
-  var joueursObjets = joueursData.map(function (joueurJSON) {
-    return JSON.parse(joueurJSON);
-  });
-
-  // Calculer la somme totale des points de vie
-  var totalHP = 0;
-  for (var i = 0; i < joueursObjets.length; i++) {
-    var joueur = joueursObjets[i];
-    var hp = joueur.hp; // Convertir en nombre
-    if (!isNaN(hp)) {
-      totalHP += hp;
+  document.addEventListener("DOMContentLoaded", function () {
+    console.log(joueursData);
+  
+    // Convertir les chaînes JSON en objets
+    var joueursObjets = joueursData.map(function (joueurJSON) {
+      return JSON.parse(joueurJSON);
+    });
+  
+    // Calculer la somme totale des points de vie
+    var totalHP = 0;
+    for (var i = 0; i < joueursObjets.length; i++) {
+      var joueur = joueursObjets[i];
+      var hp = parseFloat(joueur.hp); // Convertir en nombre
+      if (!isNaN(hp)) {
+        totalHP += hp;
+      }
     }
-  }
-
-  // Afficher la somme totale des points de vie dans la console
-  console.log("Total HP de tous les personnages : " + totalHP);
-}
-);
+  
+    // Instancier la classe HP_TOTALplayer avec HP_MAX initial
+    var hpTotalPlayer = new HP_TOTALplayer(HP_MAX_INITIAL); // Remplacez HP_MAX_INITIAL par la valeur correcte
+  
+    // Utiliser la méthode AddTotalHP pour ajouter la somme totale des HP
+    hpTotalPlayer.AddTotalHP(totalHP);
+  
+    // Maintenant hpTotalPlayer.HP_NOW contient les HP modifiés
+    console.log("HP modifiés : " + hpTotalPlayer.HP_NOW);
+  
+    // Envoyez hpTotalPlayer.HP_NOW à votre autre fichier PHP si nécessaire
+    // ...
+  });
+  
