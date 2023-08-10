@@ -89,9 +89,11 @@ class CombatListe {
     }
   }
 
-  nextRotation() {
-    const rotation = this.liste.splice(0, 3); // Retirez les trois premiers personnages
-    this.liste = this.liste.concat(rotation); // Ajoutez-les à la fin de la liste
+  deplacerPremiersMembres() {
+    if (this.liste.length >= 3) {
+      const premiersMembres = this.liste.splice(0, 3); // Retirer les trois premiers membres
+      this.liste.push(premiersMembres); // Ajouter les membres à la fin
+    }
   }
 
 }
@@ -157,6 +159,7 @@ getEnnemisDuNiveau(niveauId)
   });
 
 
+let personnages = []
 
 document.addEventListener("DOMContentLoaded", function () {
   // Convertir les chaînes JSON en objets
@@ -198,9 +201,11 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     personnages.push(personnage);
   }
-
-  const listeperso = new CombatListe(personnages)
-  console.log(listeperso.liste)
-  const feur = listeperso.nextRotation()
-  console.log(feur)
+  
 });
+
+const listeDeCombat = new CombatListe(personnages);
+
+console.log("Liste initiale :", listeDeCombat.liste);
+listeDeCombat.deplacerPremiersMembres();
+console.log("Liste après déplacement :", listeDeCombat.liste);
