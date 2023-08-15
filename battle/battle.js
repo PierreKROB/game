@@ -92,9 +92,10 @@ class CombatListe {
   deplacerPremiersMembres() {
     if (this.liste.length >= 3) {
       const premiersMembres = this.liste.splice(0, 3); // Retirer les trois premiers membres
-      this.liste.push(premiersMembres); // Ajouter les membres à la fin
+      this.liste.push(...premiersMembres); // Ajouter les membres à la fin
     }
   }
+
 
 }
 
@@ -201,11 +202,9 @@ document.addEventListener("DOMContentLoaded", function () {
     );
     personnages.push(personnage);
   }
-  
-});
-
-const listeDeCombat = new CombatListe(personnages);
+  const listeDeCombat = new CombatListe(personnages);
 
 console.log("Liste initiale :", listeDeCombat.liste);
 listeDeCombat.deplacerPremiersMembres();
 console.log("Liste après déplacement :", listeDeCombat.liste);
+});
