@@ -159,9 +159,6 @@ getEnnemisDuNiveau(niveauId)
     afficherEnnemis(ennemisData);
   });
 
-
-let personnages = []
-
 document.addEventListener("DOMContentLoaded", function () {
   // Convertir les chaînes JSON en objets
   var joueursObjets = joueursData.map(function (joueurJSON) {
