@@ -11,7 +11,7 @@ images.length = 10;
 // Push the images into array
 for (var i = 0; i < images.length; i++) {
     images[i] = new Image();
-    images[i].src = './animations/Goku/static/goku-kamehameha' + (i + 1) + '.png';
+    images[i].src = './animations/Goku/static/goku-static' + (i + 1) + '.png';
 }
 
 var i = 0; // Start from the first image
