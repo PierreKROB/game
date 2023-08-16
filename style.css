@@ -1,13 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap');
 
-* 
-{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins',sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
-
 
 body {
     text-align: center;
@@ -44,26 +42,46 @@ h1 {
     margin-bottom: 10px;
 }
 
-.character-image {
-    max-width: 100%;
-    height: auto;
-}
-
-.button {
-    background-color: #336699;
-    color: #ffffff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-#battle-log {
-    text-align: left;
+.button-container {
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
 }
 
-button a {
+.button {
+    background-color: #e74c3c; /* Nouvelle couleur */
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px; /* Pour obtenir des boutons ronds */
+    cursor: pointer;
+    margin: 0 10px; /* Espacement entre les boutons */
+    text-decoration: none; /* Pour les liens internes dans les boutons */
+}
+
+.button a {
     text-decoration: none;
+    color: #ffffff; /* Couleur du texte */
+}
+
+/* Supprimez la bordure du lien pour enlever le trait */
+.button a:focus, .button a:active {
+    outline: none;
+    border: none;
+}
+
+
+/* Ajoutez ces styles à votre fichier style.css */
+.box {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#game-box h2 {
+    color: #336699;
+    margin-bottom: 10px;
 }

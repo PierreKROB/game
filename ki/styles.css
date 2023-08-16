@@ -1,0 +1,81 @@
+/* styles.css */
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.plateau-de-ki {
+    display: flex;
+    grid-template-columns: repeat(5, 60px); /* Ajustez le nombre de colonnes et la taille */
+    gap: 10px; /* Espacement entre les sphères */
+    flex-direction: column;
+}
+
+.sphere-ki {
+    width: 60px; /* Ajustez la taille */
+    height: 60px;
+    border-radius: 50%; /* Pour rendre les sphères circulaires */
+    border: 2px solid #fff; /* Bordure blanche pour un meilleur aspect */
+    background-color: #cccccc; /* Couleur de base de la sphère */
+    cursor: pointer; /* Curseur de souris lorsqu'on survole */
+}
+
+
+.ligne-ki {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px; /* Espacement entre les lignes */
+}
+
+.couleur-end {
+    background-color: #f49803; 
+}
+
+.couleur-tec {
+    background-color: #0bbb0b; 
+}
+
+.couleur-int {
+    background-color: #a10aaf;
+}
+
+.couleur-pui {
+    background-color: #e71515; 
+}
+
+.couleur-agi {
+    background-color: #0943ad;
+}
+
+.couleur-rainbow {
+    background-color: #1d292a;
+}
+
+.couleur-end-relier {
+    background-color: rgba(244, 152, 3, 0.5);
+}
+
+.couleur-tec-relier {
+    background-color: rgba(11, 187, 11, 0.5);
+}
+
+.couleur-int-relier {
+    background-color: rgba(161, 10, 175, 0.5);
+}
+
+.couleur-pui-relier {
+    background-color: rgba(231, 21, 21, 0.5);
+}
+
+.couleur-agi-relier {
+    background-color: rgba(9, 67, 173, 0.5);
+}
+
+.couleur-rainbow-relier {
+    background-color: rgba(29, 41, 42, 0.5);
+}

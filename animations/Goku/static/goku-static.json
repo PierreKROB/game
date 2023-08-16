@@ -1,0 +1,49 @@
+{ "frames": {
+   "goku static0.png": {
+    "frame": { "x": 0, "y": 0, "w": 93, "h": 78 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 93, "h": 78 },
+    "sourceSize": { "w": 93, "h": 78 },
+    "duration": 100
+   },
+   "goku static1.png": {
+    "frame": { "x": 93, "y": 0, "w": 93, "h": 78 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 93, "h": 78 },
+    "sourceSize": { "w": 93, "h": 78 },
+    "duration": 100
+   },
+   "goku static2.png": {
+    "frame": { "x": 186, "y": 0, "w": 93, "h": 78 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 93, "h": 78 },
+    "sourceSize": { "w": 93, "h": 78 },
+    "duration": 100
+   },
+   "goku static3.png": {
+    "frame": { "x": 279, "y": 0, "w": 93, "h": 78 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 93, "h": 78 },
+    "sourceSize": { "w": 93, "h": 78 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.2.40-x64",
+  "format": "RGBA8888",
+  "size": { "w": 372, "h": 78 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

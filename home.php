@@ -1,9 +1,7 @@
 <?php
 session_start();
 if (isset($_SESSION['username'])) {
-    $host = getenv("DB_HOST");
 ?>
-
 
     <!DOCTYPE html>
     <html lang="fr">
@@ -19,18 +17,25 @@ if (isset($_SESSION['username'])) {
         <div id="game-container">
             <h1>Diara Battle</h1>
             <p>Bienvenue <?php echo $_SESSION["username"] ?></p>
-            <div id="character-list">
+            <!-- À l'intérieur de votre div #game-container -->
+            <div id="game-box" class="box">
+                <h2>Afk-battle</h2>
+                <?php 
+                    include_once "afk-battle/afk-battle.php";
+                ?>
             </div>
-            <button id="summon-button" class="button">Faire une invocation</button>
+
+        </div>
+        <div class="button-container">
+            <button id="summon-button" class="button">Invocation</button>
             <button id="battle-button" class="button"><a href="battle/select_lvl.php">Combattre</a></button>
-            <button id="box-button" class="button"><a href="box.php">Ma box</a></button>
+            <button id="box-button" class="button"><a href="box.php">Box</a></button>
             <button id="logout" class="button"><a href="logout.php">Déconnexion</a></button>
-            <div id="battle-log"></div>
         </div>
 
-        <script>
-            // Ici, tu ajouteras le JavaScript pour gérer les interactions de l'utilisateur et les appels AJAX vers le backend.
-        </script>
+        <div id="battle-log"></div>
+        </div>
+
     </body>
 
     </html>
