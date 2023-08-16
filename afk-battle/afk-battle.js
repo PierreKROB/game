@@ -4,21 +4,22 @@ var c = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-//create empty array
+// Create empty array
 var images = [];
 images.length = 10;
 
-//push the images into array
-
-for(var i = 1 ; i < images.length ; i++){
+// Push the images into array
+for (var i = 0; i < images.length; i++) {
     images[i] = new Image();
-    images[i].src = './animations/Goku/super-attack/goku-kamehameha'+ i.toString() +'.png';
+    images[i].src = './animations/Goku/static/goku-kamehameha' + (i + 1) + '.png';
 }
-var i = 1;
-setInterval(function(){
+
+var i = 0; // Start from the first image
+setInterval(function () {
+    c.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+    c.drawImage(images[i], 100, 100, 100, 100);
     i++;
-    if( i >= 10){
-        i = 1;
+    if (i >= images.length) {
+        i = 0;
     }
-    c.drawImage(images[i],100,100,100,100);
-},100)
+}, 100);
