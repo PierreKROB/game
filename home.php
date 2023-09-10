@@ -18,12 +18,12 @@ if (isset($_SESSION['username'])) {
             <h1>Diara Battle</h1>
             <p>Bienvenue <?php echo $_SESSION["username"] ?></p>
             <!-- À l'intérieur de votre div #game-container -->
-            <div id="game-box" class="box">
+            <!-- <div id="game-box" class="box">
                 <h2>Afk-battle</h2>
                 <?php 
-                    include_once "afk-battle/afk-battle.php";
+                    // include_once "afk-battle/afk-battle.php";
                 ?>
-            </div>
+            </div> -->
 
         </div>
         <div class="button-container">

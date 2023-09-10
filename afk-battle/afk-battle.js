@@ -4,43 +4,53 @@ var c = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Créer des tableaux d'images pour les deux types d'animations
 var staticImages = [];
-var kamehamehaImages = [];
+staticImages.length = 10;
 
-// Remplir les tableaux d'images pour les deux types d'animations
-for (var i = 0; i < 10; i++) {
+for (var i = 1; i <= staticImages.length - 1; i++) {
     staticImages[i] = new Image();
-    staticImages[i].src = './animations/Goku/static/goku-static' + (i + 1) + '.png';
-
-    kamehamehaImages[i] = new Image();
-    kamehamehaImages[i].src = './animations/Goku/super-attack/goku-kamehameha' + (i + 1) + '.png';
+    staticImages[i].src = './animations/Goku/static/goku-static' + i.toString() + '.png';
 }
 
-var frameIndex = 0; // Index de la frame actuelle
-var isKamehameha = false; // Indicateur pour l'animation du Kamehameha
+var kamehamehaImages = [];
+kamehamehaImages.length = 11;
 
-// Interval pour l'animation générale (toutes les 4 secondes)
+for (var i = 1; i <= kamehamehaImages.length - 1; i++) {
+    kamehamehaImages[i] = new Image();
+    kamehamehaImages[i].src = './animations/Goku/super-attack/goku-kamehameha' + i.toString() + '.png';
+}
+
+var staticIndex = 1;
+var kamehamehaIndex = 1;
+var animationInterval;
+
+function startStaticAnimation() {
+    animationInterval = setInterval(function () {
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        c.drawImage(staticImages[staticIndex], 100, 100, 100, 100);
+        staticIndex++;
+        if (staticIndex >= staticImages.length) {
+            staticIndex = 1;
+        }
+    }, 100);
+}
+
+function startKamehamehaAnimation() {
+    clearInterval(animationInterval);
+
+    var kamehamehaFrame = 1;
+    var kamehamehaInterval = setInterval(function () {
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        c.drawImage(kamehamehaImages[kamehamehaFrame], 100, 100, 100, 100);
+        kamehamehaFrame++;
+        if (kamehamehaFrame >= kamehamehaImages.length) {
+            clearInterval(kamehamehaInterval);
+            startStaticAnimation();
+        }
+    }, 100);
+}
+
+startStaticAnimation();
 setInterval(function () {
-    isKamehameha = !isKamehameha; // Alterner entre les deux animations
-    frameIndex = 0; // Réinitialiser l'index de frame
-
-    // Effacer le canvas
-    c.clearRect(0, 0, canvas.width, canvas.height);
+    startKamehamehaAnimation();
 }, 4000);
-
-// Interval pour afficher les frames individuelles
-setInterval(function () {
-    c.clearRect(0, 0, canvas.width, canvas.height); // Effacer le canvas
-
-    // Choisir le tableau d'images en fonction de l'animation actuelle
-    var currentImages = isKamehameha ? kamehamehaImages : staticImages;
-
-    // Dessiner l'image courante
-    c.drawImage(currentImages[frameIndex], 100, 100, 100, 100);
-
-    frameIndex++;
-    if (frameIndex >= 10) {
-        frameIndex = 0;
-    }
-}, 100);
